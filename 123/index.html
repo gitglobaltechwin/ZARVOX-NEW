@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZARVOX - Shopping</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#EAEDED}
+.header{background:#131921;color:white;padding:8px 12px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:100}
+.logo{font-size:24px;font-weight:bold;cursor:pointer} .logo span{font-size:13px;font-weight:normal;vertical-align:super}
+.search-bar{flex:1;display:flex;max-width:720px;height:40px;background:white;border-radius:4px;overflow:hidden;margin:0 10px}
+.search-bar select{background:#e6e6e6;border:none;padding:0 10px;font-size:12px;border-right:1px solid #ddd;outline:none}
+.search-bar input{flex:1;border:none;padding:0 12px;outline:none;font-size:15px}
+.search-bar button{background:#febd69;border:none;width:50px;cursor:pointer;font-size:20px}
+.header-right{margin-left:auto;display:flex;gap:14px;font-size:12px;align-items:center}
+.nav{background:#232f3e;color:white;display:flex;gap:8px;padding:0 12px;font-size:14px;overflow-x:auto;white-space:nowrap;position:sticky;top:58px;z-index:99;height:39px;align-items:center} .nav::-webkit-scrollbar{display:none}
+.nav div{cursor:pointer;white-space:nowrap;padding:6px 8px;border:1px solid transparent;flex-shrink:0;font-size:14px;height:39px;display:flex;align-items:center} .nav div:hover{border:1px solid white}
+.nav div:hover{border:1px solid white} .nav .active{border:1px solid white;background:#37475a;font-weight:bold}
+.container{display:flex;max-width:1920px;margin:0 auto;min-height:calc(100vh - 100px)}
+.sidebar{width:270px;background:white;border-right:1px solid #ddd;padding:0;overflow-y:auto;height:calc(100vh - 100px);position:sticky;top:100px}
+.sidebar h3{font-size:14px;font-weight:800;padding:12px 12px 6px;display:flex;align-items:center;gap:8px;cursor:pointer;background:#f8f8f8;margin-top:2px}
+
+.sidebar h3 .arrow-icon{font-size:26px;font-weight:900;line-height:1;margin-right:8px;color:#000;display:inline-block;transform:scaleX(1.3);cursor:pointer;}
+.sidebar li .arrow-icon{font-size:18px;font-weight:600;margin-right:8px;line-height:1;display:inline-block;color:#333;cursor:pointer;}
+.sidebar li.sub-arrow-item{font-weight:400;}
+.sidebar li.sub-arrow-item.light-bold{font-weight:650;}
+.sidebar ul{display:block !important;}
+.section-bold-title{font-size:16px;font-weight:900;padding:12px 12px;background:white;color:#0F1111;margin-bottom:4px;border-radius:4px;letter-spacing:0.5px;border:1px solid #ddd;}
+
+
+
+
+
+.sidebar li{font-size:13px;padding:6px 12px 6px 30px;cursor:pointer;color:#0F1111;list-style:none}
+.sidebar li:hover{background:#f0f2f2;color:#E47911}
+.sidebar li.active{font-weight:800;background:#FEF8E7;border-left:3px solid #F90}
+.sidebar li.sub-active{font-weight:800;background:#FEF8E7;border-left:3px solid #F90;padding-left:38px}
+
+.main{flex:1;padding:12px;background:#EAEDED}
+.banner{border-radius:8px;overflow:hidden;margin-bottom:12px;border:1px solid #e6c060;min-height:180px;display:flex}
+.banner-product{background:linear-gradient(90deg,#FFD814 0%,#FFEA7A 50%,#fff 100%)}
+.banner-food{background:linear-gradient(90deg,#FF8C00 0%,#FFD814 60%,#fff 100%)}
+.banner-service{background:linear-gradient(90deg,#067D62 0%,#7FDBDA 60%,#fff 100%)}
+.banner-buyagain{background:linear-gradient(90deg,#232f3e 0%,#FFD814 60%,#fff 100%)}
+.banner-left{padding:22px;flex:1}
+.banner-left .badge{display:inline-block;margin-top:14px;background:#131921;color:white;padding:7px 16px;border-radius:20px;font-size:13px;font-weight:bold;margin-right:8px}
+.banner-left .badge2{background:#fff0c0;color:#000;border:1px solid #e6c060}
+.banner-right{display:grid;grid-template-columns:repeat(4,82px);grid-template-rows:repeat(2,82px);gap:6px;padding:12px}
+.banner-right img{width:82px;height:82px;object-fit:cover;border-radius:8px;background:white}
+.deals-header{background:white;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;border:1px solid #ddd;border-radius:8px 8px 0 0}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;background:#EAEDED;padding:14px;border:1px solid #ddd;border-top:none;border-radius:0 0 8px 8px}
+@media(max-width:900px){.container{flex-direction:column} .sidebar{width:100%;height:auto;position:relative;top:0} .grid{grid-template-columns:repeat(2,1fr)}}
+.card{background:white;border-radius:10px;overflow:hidden;border:1px solid #e0e0e0;cursor:pointer}
+.card:hover{box-shadow:0 6px 16px rgba(0,0,0,0.15)} .card img{width:100%;height:220px;object-fit:cover}
+.card-body{padding:12px} .card-body h4{font-size:14px;height:36px;overflow:hidden}
+.price{font-size:19px;font-weight:800} .mrp{font-size:12px;color:#565959;text-decoration:line-through;margin-left:5px} .off{font-size:12px;color:#067D62;margin-left:5px;font-weight:bold}
+.add-btn{width:100%;background:#FFD814;border:1px solid #FCD200;border-radius:20px;padding:8px;margin-top:10px;font-size:13px;cursor:pointer}
+.prime{background:#00A8E1;color:white;font-size:10px;padding:3px 7px;border-radius:4px;font-weight:800;position:absolute;top:10px;left:10px}
+.page{display:none} .page.active{display:block}
+#all-drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:200;display:none}
+#all-drawer-overlay.show{display:block}
+#all-drawer{position:fixed;top:0;left:0;width:360px;max-width:85vw;height:100vh;background:white;z-index:201;overflow-y:auto;transform:translateX(-100%);transition:transform 0.25s ease;box-shadow:2px 0 10px rgba(0,0,0,0.3)}
+#all-drawer.show{transform:translateX(0)}
+.drawer-header{background:#232f3e;color:white;padding:14px 16px;display:flex;align-items:center;gap:12px;font-size:18px;font-weight:bold;position:sticky;top:0;z-index:2}
+.drawer-section{padding:8px 0;border-bottom:1px solid #e0e0e0}
+.drawer-section h3{font-size:18px;font-weight:800;padding:12px 20px 8px;color:#0F1111}
+.drawer-section li{font-size:14px;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;color:#0F1111;list-style:none}
+.drawer-section li:hover{background:#f0f2f2}
+.drawer-close{margin-left:auto;cursor:pointer;font-size:24px}
+
+/* --- ADDED ONLY FOR EN & Account dropdowns - as per photos --- */
+.header-right{position:relative}
+.hdr-item{position:relative;padding:8px 8px;border:1px solid transparent;cursor:pointer}
+.hdr-item:hover{border:1px solid white}
+.lang-dropdown, .account-dropdown{
+  display:none;position:absolute;top:100%;background:white;color:#0F1111;
+  border:1px solid #ddd;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.2);z-index:500;
+  padding:14px;
+}
+.lang-dropdown{left:0;width:240px}
+.lang-dropdown.show{display:block}
+.account-dropdown{right:0;width:460px;left:auto}
+.account-dropdown.show{display:block}
+.lang-dropdown .lang-title{font-size:13px;margin-bottom:10px}
+.lang-dropdown .lang-title a{color:#0066c0;text-decoration:none;font-size:12px;margin-left:6px}
+.lang-dropdown .lang-opt{font-size:13px;padding:6px 0;display:flex;gap:8px;align-items:center;cursor:pointer}
+.lang-dropdown .lang-opt:hover{color:#E47911;text-decoration:underline}
+.lang-dropdown .lang-opt input{accent-color:#E47911}
+.lang-dropdown .divider{border-top:1px solid #e0e0e0;margin:10px 0}
+.lang-dropdown .country-line{font-size:13px;margin:8px 0}
+.account-dropdown .signin-box{text-align:center;padding:6px 0 14px;border-bottom:1px solid #e0e0e0;margin-bottom:12px}
+.account-dropdown .signin-btn{background:#FFD814;border:1px solid #FCD200;border-radius:8px;padding:7px 0;width:200px;font-size:13px;cursor:pointer}
+.account-dropdown .columns{display:flex;gap:20px}
+.account-dropdown .col{flex:1}
+.account-dropdown .col h4{font-size:16px;font-weight:800;margin-bottom:8px}
+.account-dropdown .col div{font-size:13px;padding:4px 0;color:#444;cursor:pointer}
+.account-dropdown .col div:hover{color:#E47911;text-decoration:underline}
+
+
+/* --- Returns & Orders Signin Page - as per photo --- */
+#signinPage{
+  display:none;position:fixed;inset:0;background:white;z-index:1000;overflow-y:auto;
+}
+#signinPage.show{display:block}
+.signin-header{text-align:center;padding:22px 0 10px;font-size:28px;font-weight:800;letter-spacing:-1px}
+.signin-header span{font-weight:400;font-size:18px;position:relative;top:-6px}
+.signin-box-center{max-width:350px;margin:20px auto;border:1px solid #ddd;border-radius:8px;padding:20px 26px;background:white}
+.signin-box-center h2{font-size:28px;font-weight:400;line-height:1.2;margin-bottom:14px}
+.signin-box-center label{font-size:13px;font-weight:700;display:block;margin-bottom:6px}
+.signin-box-center input{width:100%;height:31px;border:1px solid #888;border-radius:3px;padding:3px 7px;outline:none}
+.signin-box-center input:focus{border-color:#E77600;box-shadow:0 0 3px 2px rgba(228,121,17,.5)}
+.signin-continue{width:100%;background:#FFD814;border:1px solid #FCD200;border-radius:8px;padding:7px;margin-top:14px;font-size:13px;cursor:pointer}
+.signin-continue:hover{background:#F7CA00}
+.signin-terms{font-size:12px;margin-top:18px;line-height:1.4}
+.signin-terms a{color:#0066c0;text-decoration:none}
+.signin-terms a:hover{text-decoration:underline;color:#C45500}
+.signin-divider{border-top:1px solid #e0e0e0;margin:18px 0}
+.signin-work b{font-size:13px}
+.signin-work a{font-size:13px;color:#0066c0;text-decoration:none}
+.signin-footer{text-align:center;margin-top:26px;border-top:1px solid #ddd;padding-top:20px;font-size:11px}
+.signin-footer a{color:#0066c0;text-decoration:none;margin:0 8px}
+.signin-close{position:fixed;top:16px;right:16px;width:36px;height:36px;border:1px solid #ddd;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px}
+
+
+/* --- Delivering to Location Popup - as per photo --- */
+#locationOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1100}
+#locationOverlay.show{display:block}
+#locationPopup{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:370px;max-width:90vw;background:white;border-radius:8px;box-shadow:0 8px 20px rgba(0,0,0,0.3);z-index:1101;overflow:hidden}
+#locationPopup.show{display:block}
+.loc-header{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;background:#F0F2F2;border-bottom:1px solid #ddd;font-size:16px;font-weight:700}
+.loc-close{width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:white;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px}
+.loc-body{padding:16px 20px}
+.loc-body p{font-size:12px;color:#565959;margin-bottom:14px;line-height:1.4}
+.loc-signin-btn{width:100%;background:#FFD814;border:1px solid #FCD200;border-radius:20px;padding:9px;font-size:13px;cursor:pointer;text-align:center}
+.loc-signin-btn:hover{background:#F7CA00}
+.loc-divider{display:flex;align-items:center;gap:10px;margin:14px 0;color:#565959;font-size:12px}
+.loc-divider::before,.loc-divider::after{content:'';flex:1;height:1px;background:#ddd}
+.loc-pincode-row{display:flex;gap:8px;margin-top:6px}
+.loc-pincode-row input{flex:1;height:32px;border:1px solid #888;border-radius:8px;padding:0 10px;outline:none;font-size:13px}
+.loc-pincode-row input:focus{border-color:#E77600;box-shadow:0 0 3px 2px rgba(228,121,17,.5)}
+.loc-apply{padding:0 18px;height:32px;border:1px solid #D5D9D9;border-radius:8px;background:white;font-size:13px;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.1)}
+.loc-apply:hover{background:#F0F2F2}
+
+
+/* --- Cart Page - as per photo --- */
+#cartPage{display:none;position:fixed;inset:0;background:#EAEDED;z-index:1200;overflow-y:auto}
+#cartPage.show{display:block}
+.cart-topbar{background:#131921;color:white;padding:0 18px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:2}
+.cart-topbar .logo{font-size:24px;font-weight:800;color:white}
+.cart-close-btn{border:1px solid #555;background:#232f3e;color:white;padding:6px 14px;border-radius:4px;cursor:pointer;font-size:13px}
+.cart-main{display:flex;max-width:1400px;margin:14px auto;gap:20px;padding:0 18px;align-items:flex-start}
+.cart-left{flex:1;background:white;padding:24px 20px;border:1px solid #ddd;border-radius:4px;min-height:180px;display:flex;gap:20px}
+.cart-left img{width:140px;height:120px;object-fit:contain}
+.cart-empty-title{font-size:21px;font-weight:700;margin-bottom:8px}
+.cart-empty-link{font-size:14px;color:#0066c0;text-decoration:none}
+.cart-btns{margin-top:14px;display:flex;gap:10px}
+.cart-btn-yellow{background:#FFD814;border:1px solid #FCD200;border-radius:8px;padding:6px 16px;font-size:13px;cursor:pointer}
+.cart-btn-white{background:white;border:1px solid #D5D9D9;border-radius:8px;padding:6px 16px;font-size:13px;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.1)}
+.cart-right{width:360px;background:white;border:1px solid #ddd;border-radius:8px;padding:16px}
+.cart-right h3{font-size:16px;font-weight:700;margin-bottom:12px}
+.cart-recent-item{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid #eee}
+.cart-recent-item:last-child{border:none}
+.cart-recent-item img{width:80px;height:80px;object-fit:cover;border:1px solid #eee;background:#f8f8f8}
+.cart-recent-info{flex:1}
+.cart-recent-title{font-size:12px;color:#0066c0;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cart-recent-rating{font-size:11px;color:#FFA41C;margin:2px 0}
+.cart-recent-price{font-size:13px}
+.cart-recent-price b{color:#B12704}
+.cart-recent-mrp{font-size:11px;color:#565959}
+.cart-recent-del{font-size:11px;margin-top:2px}
+.cart-recent-add{background:#FFD814;border:1px solid #FCD200;border-radius:20px;padding:4px 12px;font-size:11px;margin-top:6px;cursor:pointer}
+.cart-note{font-size:12px;color:#565959;padding:18px;background:#EAEDED}
+.cart-note a{color:#0066c0}
+@media(max-width:900px){.cart-main{flex-direction:column}.cart-right{width:100%}.cart-left{flex-direction:column}}
+
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo" onclick="showPage('product')">zarvox<span>.in</span></div>
+  <div style="font-size:12px;cursor:pointer;border:1px solid transparent;padding:4px" id="deliveryLocationBtn" onclick="openLocationPopup(event)">Delivering to<br><b id="deliveryLocationText">Maduravoyal, Chennai 602105</b></div>
+  <div class="search-bar"><select id="catSelect"><option>Clothes Product</option><option>Food</option><option>Service</option><option>Buy Again</option><option>All</option></select><input id="searchInput" placeholder="Search ZARVOX.in"><button onclick="doSearch()">⌕</button></div>
+  <div class="header-right">
+  <div class="hdr-item" id="langBtn" onclick="toggleLang(event)">EN ▼
+    <div class="lang-dropdown" id="langDropdown" onclick="event.stopPropagation()">
+      <div class="lang-title">Change Language <a href="#">Learn more</a></div>
+      <label class="lang-opt" onclick="setLanguage('EN')"><input type="radio" name="lang" checked> English - EN</label>
+      <label class="lang-opt" onclick="setLanguage('HI')"><input type="radio" name="lang"> हिन्दी - HI</label>
+      <label class="lang-opt" onclick="setLanguage('TA')"><input type="radio" name="lang"> தமிழ் - TA</label>
+      <label class="lang-opt" onclick="setLanguage('TE')"><input type="radio" name="lang"> తెలుగు - TE</label>
+      <label class="lang-opt" onclick="setLanguage('KN')"><input type="radio" name="lang"> ಕನ್ನಡ - KN</label>
+      <label class="lang-opt" onclick="setLanguage('ML')"><input type="radio" name="lang"> മലയാളം - ML</label>
+      <label class="lang-opt" onclick="setLanguage('BN')"><input type="radio" name="lang"> বাংলা - BN</label>
+      <label class="lang-opt" onclick="setLanguage('MR')"><input type="radio" name="lang"> मराठी - MR</label>
+      <div class="divider"></div>
+      <div class="country-line">IN You are shopping on ZARVOX.in</div>
+      <div style="font-size:13px"><a href="#" style="color:#0066c0;text-decoration:none">Change country/region.</a></div>
+    </div>
+  </div>
+  <div class="hdr-item" id="accountBtn" onclick="toggleAccount(event)"><span style="font-size:11px;display:block">Hello, sign in</span><b>Account & Lists ▼</b>
+    <div class="account-dropdown" id="accountDropdown" onclick="event.stopPropagation()">
+      <div class="signin-box">
+        <button class="signin-btn">Sign in</button>
+        <div style="font-size:11px;margin-top:7px">New customer? <a href="#" style="color:#0066c0">Start here.</a></div>
+      </div>
+      <div class="columns">
+        <div class="col">
+          <h4>Your Lists</h4>
+          <div>Create a Wish List</div>
+          <div>Wish from Any Website</div>
+          <div>Baby Wishlist</div>
+          <div>Discover Your Style</div>
+          <div>Explore Showroom</div>
+        </div>
+        <div class="col" style="border-left:1px solid #e0e0e0;padding-left:20px">
+          <h4>Your Account</h4>
+          <div>Your Account</div>
+          <div>Your Orders</div>
+          <div>Your Wish List</div>
+          <div>Keep shopping for</div>
+          <div>Your Recommendations</div>
+          <div>Your Prime Membership</div>
+          <div>Your Prime Video</div>
+          <div>Your Subscribe & Save Items</div>
+          <div>Memberships & Subscriptions</div>
+          <div>Your Seller Account</div>
+          <div>Manage Your Content and Devices</div>
+          <div>Your Music Library</div>
+          <div>Register for a free Business Account</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hdr-item" onclick="openSigninPage(event)">Returns<br><b>& Orders</b></div>
+  <div class="hdr-item" onclick="openCartPage(event)">🛒 Cart</div>
+</div>
+</div>
+<div class="nav">
+  <div onclick="openAllDrawer()">☰ All</div>
+  <div onclick="showPage('home')">Home</div>
+  <div id="nav-deals" onclick="showPage('deals')">Today's Deals</div>
+  <div id="nav-product" onclick="showPage('product')">Product</div>
+  <div id="nav-food" onclick="showPage('food')">Food</div>
+  <div id="nav-service" onclick="showPage('service')">Service</div>
+  <div id="nav-buyagain" onclick="showPage('buyagain')">Buy Again</div>
+  <div id="nav-collection" onclick="showPage('collection')">Collection</div>
+  <div id="nav-history" onclick="showPage('history')">Your History</div>
+</div>
+<div class="container">
+  <div class="sidebar" id="sidebar"></div>
+  <div class="main">
+    <div id="page-product" class="page active">
+      <div class="banner banner-product"><div class="banner-left"><h2>Extra savings on Clothes Product - Men, Women & Kids Fashion. Maduravoyal, Chennai delivery in 24hrs.</h2><div><span class="badge">Up to 70% OFF</span><span class="badge badge2">Free Delivery</span></div></div><div class="banner-right"><img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=150"><img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=150"><img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=150"><img src="https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?w=150"><img src="https://images.unsplash.com/photo-1584305574647-0cc949a2bb9f?w=150"><img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=150"><img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=150"><img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=150"></div></div>
+      <div class="deals-header"><h2 id="productTitle">Today's Deals • Clothes Product • Maduravoyal, Chennai 602105</h2><span id="productCount"></span></div>
+      <div class="grid" id="productGrid"></div>
+    </div>
+    <div id="page-food" class="page">
+      <div class="banner banner-food"><div class="banner-left"><h2>Extra savings on Food - Organic, Snacks, Diet & Health. Maduravoyal, Chennai delivery in 24hrs.</h2><div><span class="badge">Up to 70% OFF</span><span class="badge badge2">Free Delivery</span></div></div><div class="banner-right"><img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=150"><img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=150"><img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=150"><img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=150"><img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=150"><img src="https://images.unsplash.com/photo-1517673400267-0251440c45dc?w=150"><img src="https://images.unsplash.com/photo-1598119026944-84899f3d2d5b?w=150"><img src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=150"></div></div>
+      <div class="deals-header"><h2 id="foodTitle">Today's Deals • Food • Maduravoyal, Chennai 602105</h2><span id="foodCount"></span></div>
+      <div class="grid" id="foodGrid"></div>
+    </div>
+    <div id="page-service" class="page">
+      <div class="banner banner-service"><div class="banner-left"><h2>Business Services - Tax Filing, Licenses, Courier, Startup & Digital Services. Maduravoyal, Chennai.</h2><div><span class="badge">Up to 50% OFF</span><span class="badge badge2">Expert Support</span></div></div><div class="banner-right"><img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=150"><img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=150"><img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=150"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=150"><img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=150"><img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=150"><img src="https://images.unsplash.com/photo-1580674285054-bed31e145f59?w=150"><img src="https://images.unsplash.com/photo-1626785774573-6dd65b279390?w=150"></div></div>
+      <div class="deals-header"><h2 id="serviceTitle">Today's Deals • Service • Maduravoyal, Chennai 602105</h2><span id="serviceCount"></span></div>
+      <div class="grid" id="serviceGrid"></div>
+    </div>
+    <div id="page-buyagain" class="page">
+      <div class="banner banner-buyagain"><div class="banner-left" style="color:white"><h2 style="color:white">Buy Again - Your frequently purchased items. Quick reorder from Maduravoyal, Chennai 602105</h2><div><span class="badge" style="background:white;color:#232f3e">Reorder in 1-Click</span><span class="badge badge2">Free Delivery</span></div></div><div class="banner-right" style="background:#232f3e"><img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=150"><img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=150"><img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=150"><img src="https://images.unsplash.com/photo-1584305574647-0cc949a2bb9f?w=150"><img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=150"><img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=150"><img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=150"><img src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=150"></div></div>
+      <div class="deals-header"><h2 id="buyagainTitle">Buy Again • Frequently Bought • Maduravoyal, Chennai 602105</h2><span id="buyagainCount"></span></div>
+      <div class="grid" id="buyagainGrid"></div>
+    </div>
+    
+    <div id="page-deals" class="page">
+      <div class="banner banner-product" style="background:linear-gradient(90deg,#FF0000 0%,#FFD814 60%,#fff 100%)"><div class="banner-left"><h2 style="font-weight:800;font-size:20px">🔥 Today's Deals - Lightning Deals! Limited Time Offers. Up to 80% OFF</h2><p style="margin-top:8px;font-size:13px">Maduravoyal, Chennai 602105 • Ends tonight!</p><div><span class="badge" style="background:#CC0000">80% OFF</span><span class="badge badge2">Lightning Deal</span></div></div><div class="banner-right" style="background:linear-gradient(90deg,#FF0000,#FFD814)"><img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=150"><img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=150"><img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=150"><img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=150"><img src="https://images.unsplash.com/photo-1584305574647-0cc949a2bb9f?w=150"><img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=150"><img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=150"><img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=150"></div></div>
+      <div class="deals-header"><h2 id="dealsTitle">🔥 Today's Deals • Lightning Deals • Maduravoyal, Chennai 602105</h2><span id="dealsCount"></span></div>
+      <div class="grid" id="dealsGrid"></div>
+    </div>
+
+    
+    <div id="page-collection" class="page">
+      <div class="banner banner-food" style="background:linear-gradient(90deg,#8B5CF6 0%,#FFD814 60%,#fff 100%)"><div class="banner-left"><h2 style="font-weight:800;font-size:18px">❤️ Your Collection - Wishlist, Saved Items & Curated Collections</h2><p style="margin-top:6px;font-size:12px">Maduravoyal, Chennai 602105 • 12 Collections</p><div><span class="badge" style="background:#8B5CF6">My Wishlist</span><span class="badge badge2">12 Collections</span></div></div><div class="banner-right" style="background:linear-gradient(90deg,#8B5CF6,#FFD814)"><img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=150"><img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=150"><img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=150"><img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=150"><img src="https://images.unsplash.com/photo-1584305574647-0cc949a2bb9f?w=150"><img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=150"><img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=150"><img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=150"></div></div>
+      <div class="deals-header"><h2 id="collectionTitle">❤️ Collection • My Wishlist • Maduravoyal, Chennai 602105</h2><span id="collectionCount"></span></div>
+       <div class="grid" id="collectionGrid"></div>
+    </div>
+    <div id="page-history" class="page">
+      <div class="banner banner-service" style="background:linear-gradient(90deg,#37475A 0%,#7FDBDA 60%,#fff 100%)"><div class="banner-left"><h2 style="font-weight:800;font-size:18px;color:white">🕒 Your History - Recently Viewed & Browsing History</h2><p style="margin-top:6px;font-size:12px;color:#eee">Maduravoyal, Chennai 602105 • Last 30 days history</p><div><span class="badge" style="background:white;color:#232f3e">Recently Viewed</span><span class="badge badge2">Clear History</span></div></div><div class="banner-right" style="background:linear-gradient(90deg,#37475A,#7FDBDA)"><img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=150"><img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=150"><img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=150"><img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=150"><img src="https://images.unsplash.com/photo-1584305574647-0cc949a2bb9f?w=150"><img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=150"><img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=150"><img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=150"></div></div>
+      <div class="deals-header"><h2 id="historyTitle">🕒 Your History • Recently Viewed • Maduravoyal, Chennai 602105</h2><span id="historyCount"></span></div>
+      <div class="grid" id="historyGrid"></div>
+    </div>
+
+    <div id="page-home" class="page"><div class="deals-header"><h2>All Products</h2></div><div class="grid" id="homeGrid"></div></div>
+  </div>
+</div>
+
+<div id="all-drawer-overlay" onclick="closeAllDrawer()"></div>
+<div id="all-drawer"><div class="drawer-header"><div style="width:32px;height:32px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#232f3e">👤</div><span>Hello, sign in</span><span class="drawer-close" onclick="closeAllDrawer()">✕</span></div><div id="drawer-content"></div></div>
+
+<script>
+const productCategories = {"Men":["<< Shirt","<< Classic Shirts","<< Printed Shirts","<< Party Wear","<< T-Shirt/Polo","<< Pant/Jeans","<< Dhoti/Lungi","<< Innerwear & Vest","<< Ethnic Wear Kurta"],"Women":["<< Chudi","<< Saree / Saree Blouse","<< Nighty / Night Suit","<< Leggings/Plazzo/Dupatta","<< Kurti/Tops","<< Innerwear"],"Kids":["<< Dress","<< Boys Dress 0-3/4-10/10+","<< Girls Dress/Frocks","<< Baby Dress/New Born Combo","<< School Uniform"],"Home":["<< Kitchen","<< Home Needs","<< Bed & Living","<< Pooja Needs/Decor","<< Storage Box & Organizers","<< Cleaning Items"],"Bags":["<< Handbag","<< Backpack","<< Travel Bag/Luggage","<< School Bag","<< Sling Bag/Clutch","<< Wallet"],"General":["<< Footwear","<< Accessories","<< Toys & Stationery","<< Beauty & Personal Care"]};
+const foodCategories = {"Organic":["<< Grains & Pulses","<< Oils & Jaggery","<< Raw Honey","<< Organic Rice/Millets","<< Organic Oil","<< Organic Jaggery","<< Organic Dal","<< Organic Honey"],"Non Organic":["<< Regular Rice","<< Regular Oil/Masala"],"Kids Snacks":["<< Biscuits","<< Chocolates","<< Chips/Kurkure","<< Fruit Jelly/Lollipop"],"School Snacks":["<< Cookies","<< Namkeen/Mixture","<< Small Juice/Milkshake","<< Energy Bar"],"Tea/Coffee Snacks":["<< Rusk","<< Biscuits","<< Mixture/Namkeen","<< Cookies"],"Diet Food":["<< Oats","<< Millets/Quinoa","<< Sugar Free Biscuits","<< Protein Bar"],"Weight Gain":["<< Weight Gainer","<< Peanut Butter","<< Protein Powder/Mass Gainer","<< Dates/Dry Fruits/Nuts"],"Weight Loss":["<< Green Tea","<< Apple Cider Vinegar","<< Garcinia Capsule/Fat Burner","<< Detox Juice/Herbal Tea","<< Low Fat Cookies/Oats/Millets"]};
+const serviceCategories = {"Accounts":["<< Tax Filing Services","<< Licenses","<< Auditing","<< GST","<< IT","<< MSME","<< PAN","<< Accounting","<< TDS Filing"],"Courier":["<< Domestic","<< International","<< Express","<< Same Day","<< E-commerce Shipping"],"Business Consultancy":["<< Startup Registration","<< Company Incorporation","<< Trademark/Patent","<< FSSAI","<< ISO","<< Business Loan","<< GST/MSME Registration"],"Digital Services":["<< Website Development","<< Logo Design"]};
+
+const collectionCategories = {"My Collections":["Wishlist - 12 items","Men Fashion - 8 items","Women Fashion - 15 items","Kids Collection - 6 items","Home Decor - 10 items","Food Favorites - 9 items"], "Curated For You": ["Trending Now","Price Drop - 20% OFF","New Arrivals","Top Rated","Festival Collection"], "Shared Collections": ["Family Wishlist","Friends Picks"]};
+const historyCategories = {"Today":["Viewed 2 hours ago","Viewed 5 hours ago","Viewed today morning"], "Yesterday":["Viewed yesterday","Viewed 2 days ago"], "Last Week":["Viewed last week","Viewed 2 weeks ago"], "Manage History":["Clear All History","Turn ON/OFF History","Download History"]};
+
+const collectionProducts = [
+  {title:"❤️ Wishlist - Men Classic Shirt White Formal",price:599,mrp:1299,off:"53% off",rating:1890,img:"https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400",cat:"Wishlist Men Fashion",type:"collection",tag:"Saved 2 days ago"},
+  {title:"❤️ Wishlist - Women Saree Silk Premium Red",price:1299,mrp:2499,off:"48% off",rating:2451,img:"https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400",cat:"Wishlist Women Fashion",type:"collection",tag:"Saved 1 day ago"},
+  {title:"❤️ Wishlist - Organic Rice 5kg - Monthly",price:480,mrp:600,off:"20% off",rating:3124,img:"https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400",cat:"Food Favorites Collection",type:"collection",tag:"Saved 3 days ago"},
+  {title:"❤️ Wishlist - Kitchen Storage Container Set",price:799,mrp:1299,off:"38% off",rating:1432,img:"https://images.unsplash.com/photo-1584305574647-0cc949a2bb9f?w=400",cat:"Home Decor Collection",type:"collection",tag:"Price Drop!"},
+  {title:"❤️ Wishlist - Kids Dress Pink Frock",price:449,mrp:799,off:"43% off",rating:892,img:"https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?w=400",cat:"Kids Collection",type:"collection",tag:"Saved yesterday"},
+  {title:"❤️ Wishlist - Handbag Leather Brown",price:1199,mrp:2499,off:"52% off",rating:654,img:"https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400",cat:"Bags Collection",type:"collection",tag:"Top Rated"},
+  {title:"Trending Now - Running Shoes Sports Blue",price:1499,mrp:2999,off:"50% off",rating:2109,img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400",cat:"Trending Now Curated",type:"collection",tag:"Trending"},
+  {title:"New Arrival - Website Development Service",price:9999,mrp:19999,off:"50% off",rating:1234,img:"https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400",cat:"New Arrivals",type:"collection",tag:"New Arrival"},
+];
+
+const historyProducts = [
+  {title:"Viewed 2 hrs ago - Men Shirt Premium White Formal",price:599,mrp:1299,off:"53% off",rating:89,img:"https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400",cat:"Viewed 2 hours ago Today",type:"history",tag:"2 hrs ago"},
+  {title:"Viewed 5 hrs ago - Women Chudi Cotton Daily Wear",price:499,mrp:899,off:"44% off",rating:320,img:"https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400",cat:"Viewed 5 hours ago Today",type:"history",tag:"5 hrs ago"},
+  {title:"Viewed today morning - Organic Oil Cold Pressed 1L",price:350,mrp:450,off:"22% off",rating:892,img:"https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400",cat:"Viewed today morning Today",type:"history",tag:"Today morning"},
+  {title:"Viewed yesterday - Kids Biscuits Chocolate 120g",price:99,mrp:120,off:"17% off",rating:876,img:"https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400",cat:"Viewed yesterday Yesterday",type:"history",tag:"Yesterday"},
+  {title:"Viewed 2 days ago - GST Filing Services Monthly",price:499,mrp:999,off:"50% off",rating:1245,img:"https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400",cat:"Viewed 2 days ago Yesterday",type:"history",tag:"2 days ago"},
+  {title:"Viewed last week - Saree Blouse Silk Premium",price:1299,mrp:2499,off:"48% off",rating:180,img:"https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400",cat:"Viewed last week Last Week",type:"history",tag:"Last week"},
+  {title:"Viewed 2 weeks ago - Peanut Butter Weight Gain 1kg",price:349,mrp:499,off:"30% off",rating:2876,img:"https://images.unsplash.com/photo-1598119026944-84899f3d2d5b?w=400",cat:"Viewed 2 weeks ago Last Week",type:"history",tag:"2 weeks ago"},
+  {title:"Viewed last week - Logo Design Professional",price:999,mrp:1999,off:"50% off",rating:2100,img:"https://images.unsplash.com/photo-1626785774573-6dd65b279390?w=400",cat:"Viewed last week Last Week",type:"history",tag:"Last week"},
+];
+
+const dealsCategories =
+ {"Lightning Deals":["Under ₹199","Under ₹499","Under ₹999","80% OFF","70% OFF","50% OFF"], "Top Categories": ["Men Fashion","Women Fashion","Kids Fashion","Food & Snacks","Home & Kitchen","Bags & Footwear"], "Deal Type": ["Today Only","Ending Soon","Prime Exclusive","Coupon Deals"]};
+const dealsProducts = [
+  {title:"Lightning Deal! Men Shirt - 80% OFF - Ends in 2 hrs",price:299,mrp:1499,off:"80% off",rating:1890,img:"https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400",cat:"Lightning Deals Men Fashion",type:"deals",tag:"Ends in 2 hrs"},
+  {title:"Women Saree - Daily Wear - 70% OFF Today Only",price:599,mrp:1999,off:"70% off",rating:2451,img:"https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400",cat:"Women Fashion 70% OFF",type:"deals",tag:"Today Only"},
+  {title:"Organic Rice 5kg - Coupon Deal - Extra 10% OFF",price:432,mrp:600,off:"28% off",rating:3124,img:"https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400",cat:"Food & Snacks Coupon Deals",type:"deals",tag:"Coupon"},
+  {title:"Kitchen Storage - Under ₹499 - Lightning Deal",price:399,mrp:999,off:"60% off",rating:1432,img:"https://images.unsplash.com/photo-1584305574647-0cc949a2bb9f?w=400",cat:"Under ₹499 Home & Kitchen",type:"deals",tag:"Lightning"},
+  {title:"Running Shoes - Prime Exclusive - 50% OFF",price:1499,mrp:2999,off:"50% off",rating:2109,img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400",cat:"Bags & Footwear Prime Exclusive",type:"deals",tag:"Prime Exclusive"},
+  {title:"Kids Dress - Under ₹199 - Ending Soon",price:189,mrp:499,off:"62% off",rating:155,img:"https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?w=400",cat:"Under ₹199 Kids Fashion",type:"deals",tag:"Ending Soon"},
+  {title:"Biscuits Combo - Under ₹199 - Today Only",price:99,mrp:250,off:"60% off",rating:2100,img:"https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400",cat:"Under ₹199 Food & Snacks",type:"deals",tag:"Today Only"},
+  {title:"Beauty Products - 80% OFF - Prime Exclusive",price:199,mrp:999,off:"80% off",rating:19397,img:"https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400",cat:"80% OFF Beauty",type:"deals",tag:"80% OFF"},
+];
+const buyAgainCategories = {"Frequently Bought":["Men Shirts","Women Saree","Kids Dress","Organic Rice","Snacks","Oils","Beauty Products"], "Last Month": ["Rice 3x","Oil 2x","Shirts 2x","Saree 1x"], "Recommended": ["Based on your purchases","Trending in Maduravoyal"]};
+
+const allProducts = [
+  {title:"Men Shirt - Premium White Formal - Bought 3 times",price:599,mrp:1299,off:"53% off",rating:89,img:"https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400",cat:"Men Shirt",type:"product"},
+  {title:"Classic Shirts - White Formal",price:599,mrp:1299,off:"53% off",rating:89,img:"https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400",cat:"<  Classic Shirts Shirt",type:"product"},
+  {title:"Printed Shirts - Floral",price:699,mrp:1399,off:"50% off",rating:99,img:"https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=400",cat:"<  Printed Shirts",type:"product"},
+  {title:"Party Wear - Black Night",price:899,mrp:1999,off:"55% off",rating:77,img:"https://images.unsplash.com/photo-1598033129183-c4f50c736f04?w=400",cat:"<  Party Wear",type:"product"},
+  {title:"Pant/Jeans - Slim Fit 32",price:799,mrp:1499,off:"46% off",rating:210,img:"https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=400",cat:"Pant/Jeans",type:"product"},
+  {title:"Chudi - Cotton Daily",price:499,mrp:899,off:"44% off",rating:320,img:"https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400",cat:"Chudi",type:"product"},
+  {title:"Women Chudi/Saree - Premium",price:244,mrp:359,off:"32% off",rating:122,img:"https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400",cat:"Chudi Women",type:"product"},
+  {title:"Saree Blouse - Silk Premium",price:1299,mrp:2499,off:"48% off",rating:180,img:"https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400",cat:"Saree / Saree Blouse",type:"product"},
+  {title:"Kids Dress - Premium Pack",price:289,mrp:419,off:"31% off",rating:155,img:"https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?w=400",cat:"Kids Dress",type:"product"},
+  {title:"Bags Handbag - Combo Pack",price:334,mrp:479,off:"30% off",rating:188,img:"https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400",cat:"Bags Handbag",type:"product"},
+  {title:"Kitchen Storage Container",price:799,mrp:1299,off:"38% off",rating:1432,img:"https://images.unsplash.com/photo-1584305574647-0cc949a2bb9f?w=400",cat:"Kitchen Home",type:"product"},
+  {title:"Running Shoes - Sports Blue",price:1499,mrp:2999,off:"50% off",rating:2109,img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400",cat:"Footwear General",type:"product"},
+  {title:"Organic Ponni Rice 5kg - Premium",price:480,mrp:600,off:"20% off",rating:3124,img:"https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400",cat:"Organic Rice/Millets Grains & Pulses",type:"food"},
+  {title:"Organic Cold Pressed Oil 1L",price:350,mrp:450,off:"22% off",rating:892,img:"https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400",cat:"Organic Oil Oils & Jaggery",type:"food"},
+  {title:"Raw Honey 500g - Pure",price:299,mrp:399,off:"25% off",rating:2155,img:"https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=400",cat:"Raw Honey Organic Honey",type:"food"},
+  {title:"Kids Biscuits - Chocolate 120g",price:99,mrp:120,off:"17% off",rating:876,img:"https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400",cat:"Biscuits Kids Snacks",type:"food"},
+  {title:"Chips/Kurkure - Masala 100g",price:30,mrp:40,off:"25% off",rating:2100,img:"https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=400",cat:"Chips/Kurkure",type:"food"},
+  {title:"Cookies - School Snacks 200g",price:199,mrp:250,off:"20% off",rating:1102,img:"https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400",cat:"Cookies School Snacks Tea/Coffee Snacks",type:"food"},
+  {title:"Oats - Diet Food 1kg",price:189,mrp:250,off:"24% off",rating:4321,img:"https://images.unsplash.com/photo-1517673400267-0251440c45dc45dc?w=400",cat:"Oats Diet Food",type:"food"},
+  {title:"Peanut Butter - Weight Gain 1kg",price:349,mrp:499,off:"30% off",rating:2876,img:"https://images.unsplash.com/photo-1598119026944-84899f3d2d5b?w=400",cat:"Peanut Butter Weight Gain",type:"food"},
+  {title:"Green Tea - Weight Loss 25 Bags",price:249,mrp:399,off:"37% off",rating:5432,img:"https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=400",cat:"Green Tea Weight Loss",type:"food"},
+  {title:"GST Filing Services - Monthly",price:499,mrp:999,off:"50% off",rating:1245,img:"https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400",cat:"GST Tax Filing Services Accounts",type:"service"},
+  {title:"IT Return Filing - Individual",price:599,mrp:1199,off:"50% off",rating:892,img:"https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400",cat:"IT Tax Filing Services",type:"service"},
+  {title:"MSME Registration - Quick",price:999,mrp:1999,off:"50% off",rating:543,img:"https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=400",cat:"MSME Licenses",type:"service"},
+  {title:"PAN Card Services",price:199,mrp:399,off:"50% off",rating:3210,img:"https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400",cat:"PAN Licenses",type:"service"},
+  {title:"Accounting - Monthly Books",price:1499,mrp:2999,off:"50% off",rating:432,img:"https://images.unsplash.com/photo-1554224154-22dec7ec8818?w=400",cat:"Accounting Accounts",type:"service"},
+  {title:"Domestic Courier - 1kg",price:80,mrp:120,off:"33% off",rating:5400,img:"https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400",cat:"Domestic Courier",type:"service"},
+  {title:"Startup Registration",price:4999,mrp:9999,off:"50% off",rating:432,img:"https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=400",cat:"Startup Registration Business Consultancy",type:"service"},
+  {title:"Website Development",price:9999,mrp:19999,off:"50% off",rating:1234,img:"https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400",cat:"Website Development Digital Services",type:"service"},
+  {title:"Logo Design - 3 Concepts",price:999,mrp:1999,off:"50% off",rating:2100,img:"https://images.unsplash.com/photo-1626785774573-6dd65b279390?w=400",cat:"Logo Design Digital Services",type:"service"}
+];
+
+const buyAgainProducts = [
+  {title:"Men Shirt - Premium White Formal - Bought 3 times",price:599,mrp:1299,off:"53% off",rating:89,img:"https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400",cat:"Men Shirts Frequently Bought",type:"buyagain",tag:"Bought 3 times"},
+  {title:"Women Saree - Daily Wear Red - Bought 2 times",price:899,mrp:1999,off:"55% off",rating:2451,img:"https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400",cat:"Women Saree Frequently Bought",type:"buyagain",tag:"Bought 2 times"},
+  {title:"Organic Ponni Rice 5kg - Monthly Purchase",price:480,mrp:600,off:"20% off",rating:3124,img:"https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400",cat:"Organic Rice Frequently Bought",type:"buyagain",tag:"Monthly purchase"},
+  {title:"Kids Biscuits - Chocolate 120g - Kids Fav",price:99,mrp:120,off:"17% off",rating:876,img:"https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400",cat:"Snacks Kids",type:"buyagain",tag:"Kids fav"},
+  {title:"Organic Oil 1L - Cold Pressed - Bought last month",price:350,mrp:450,off:"22% off",rating:892,img:"https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400",cat:"Oils Frequently Bought",type:"buyagain",tag:"Bought last month"},
+  {title:"Simple Hydrating Light Moisturizer 100ml - 9K+ viewed",price:280,mrp:499,off:"44% off",rating:19397,img:"https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400",cat:"Beauty Products",type:"buyagain",tag:"9K+ viewed"},
+  {title:"School Snacks - Cookies Pack 200g - Bought 5 times",price:199,mrp:250,off:"20% off",rating:1102,img:"https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400",cat:"Snacks School",type:"buyagain",tag:"Bought 5 times"},
+  {title:"Green Tea - Weight Loss 25 Bags - Diet plan",price:249,mrp:399,off:"37% off",rating:5432,img:"https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=400",cat:"Beauty Products",type:"buyagain",tag:"Diet plan"}
+];
+
+
+const clothesImageMap = {'Shirt': ['photo-1602810318383-e386cc2a3ccf', 'photo-1596755094514-f87e34085b2c', 'photo-1620012253295-c15cc3e65df4', 'photo-1598033129183-c4f50c736f04'], 'Classic Shirts': ['photo-1596755094514-f87e34085b2c', 'photo-1602810318383-e386cc2a3ccf', 'photo-1598033129183-c4f50c736f04', 'photo-1618354691792-d1d42acfd860'], 'Printed Shirts': ['photo-1576566588028-4147f3842f27', 'photo-1583743814966-8936f5b7be1a', 'photo-1602810318383-e386cc2a3ccf', 'photo-1620012253295-c15cc3e65df4'], 'Party Wear': ['photo-1598033129183-c4f50c736f04', 'photo-1507680434567-5739c80be1ac', 'photo-1515886657613-9f3515b0c78f', 'photo-1596755094514-f87e34085b2c'], 'T-Shirt/Polo': ['photo-1521572163474-6864f9cf17ab', 'photo-1583743814966-8936f5b7be1a', 'photo-1576566588028-4147f3842f27', 'photo-1602810318383-e386cc2a3ccf'], 'Pant/Jeans': ['photo-1541099649105-f69ad21f3246', 'photo-1542272604-787c3835535d', 'photo-1594633312681-425c7b97ccd1', 'photo-1473966968600-fa801b869a1a'], 'Dhoti/Lungi': ['photo-1594633312681-425c7b97ccd1', 'photo-1583391733956-3750e0ff4e8b', 'photo-1602810318383-e386cc2a3ccf', 'photo-1596755094514-f87e34085b2c'], 'Innerwear & Vest': ['photo-1596755094514-f87e34085b2c', 'photo-1521572163474-6864f9cf17ab', 'photo-1583743814966-8936f5b7be1a', 'photo-1602810318383-e386cc2a3ccf'], 'Ethnic Wear Kurta': ['photo-1594633312681-425c7b97ccd1', 'photo-1583391733956-3750e0ff4e8b', 'photo-1596755094514-f87e34085b2c', 'photo-1602810318383-e386cc2a3ccf'], 'Chudi': ['photo-1610030469983-98e550d6193c', 'photo-1583391733956-3750e0ff4e8b', 'photo-1610030469983-98e550d6193c', 'photo-1594633312681-425c7b97ccd1'], 'Saree / Saree Blouse': ['photo-1610030469983-98e550d6193c', 'photo-1583391733956-3750e0ff4e8b', 'photo-1610030469983-98e550d6193c', 'photo-1594633312681-425c7b97ccd1'], 'Nighty / Night Suit': ['photo-1518831959646-742c3a14ebf7', 'photo-1583391733956-3750e0ff4e8b', 'photo-1610030469983-98e550d6193c', 'photo-1521572163474-6864f9cf17ab'], 'Leggings/Plazzo/Dupatta': ['photo-1594633312681-425c7b97ccd1', 'photo-1583391733956-3750e0ff4e8b', 'photo-1610030469983-98e550d6193c', 'photo-1518831959646-742c3a14ebf7'], 'Kurti/Tops': ['photo-1521572163474-6864f9cf17ab', 'photo-1610030469983-98e550d6193c', 'photo-1583391733956-3750e0ff4e8b', 'photo-1518831959646-742c3a14ebf7'], 'Innerwear': ['photo-1518831959646-742c3a14ebf7', 'photo-1521572163474-6864f9cf17ab', 'photo-1610030469983-98e550d6193c', 'photo-1583391733956-3750e0ff4e8b'], 'Dress': ['photo-1518831959646-742c3a14ebf7', 'photo-1595777457583-95e059d581b8', 'photo-1521572163474-6864f9cf17ab', 'photo-1610030469983-98e550d6193c'], 'Boys Dress 0-3/4-10/10+': ['photo-1518831959646-742c3a14ebf7', 'photo-1595777457583-95e059d581b8', 'photo-1521572163474-6864f9cf17ab', 'photo-1518831959646-742c3a14ebf7'], 'Girls Dress/Frocks': ['photo-1595777457583-95e059d581b8', 'photo-1518831959646-742c3a14ebf7', 'photo-1521572163474-6864f9cf17ab', 'photo-1610030469983-98e550d6193c'], 'Baby Dress/New Born Combo': ['photo-1518831959646-742c3a14ebf7', 'photo-1595777457583-95e059d581b8', 'photo-1521572163474-6864f9cf17ab', 'photo-1518831959646-742c3a14ebf7'], 'School Uniform': ['photo-1521572163474-6864f9cf17ab', 'photo-1518831959646-742c3a14ebf7', 'photo-1595777457583-95e059d581b8', 'photo-1610030469983-98e550d6193c'], 'Kitchen': ['photo-1584305574647-0cc949a2bb9f', 'photo-1556911220-e15b29be8c8f', 'photo-1584305574647-0cc949a2bb9f', 'photo-1556911220-bff31c812dba'], 'Home Needs': ['photo-1584305574647-0cc949a2bb9f', 'photo-1522771739844-6a9f6d5f14af', 'photo-1556228578-0d85b1a4d571', 'photo-1584305574647-0cc949a2bb9f'], 'Bed & Living': ['photo-1522771739844-6a9f6d5f14af', 'photo-1584305574647-0cc949a2bb9f', 'photo-1522771739844-6a9f6d5f14af', 'photo-1556228578-0d85b1a4d571'], 'Pooja Needs/Decor': ['photo-1522771739844-6a9f6d5f14af', 'photo-1584305574647-0cc949a2bb9f', 'photo-1556228578-0d85b1a4d571', 'photo-1522771739844-6a9f6d5f14af'], 'Storage Box & Organizers': ['photo-1584305574647-0cc949a2bb9f', 'photo-1556228578-0d85b1a4d571', 'photo-1522771739844-6a9f6d5f14af', 'photo-1584305574647-0cc949a2bb9f'], 'Cleaning Items': ['photo-1584305574647-0cc949a2bb9f', 'photo-1522771739844-6a9f6d5f14af', 'photo-1556228578-0d85b1a4d571', 'photo-1584305574647-0cc949a2bb9f'], 'Handbag': ['photo-1584917865442-de89df76afd3', 'photo-1590874103328-eac38a683ce7', 'photo-1584917865442-de89df76afd3', 'photo-1590874103328-eac38a683ce7'], 'Backpack': ['photo-1584917865442-de89df76afd3', 'photo-1553062407-98eeb64c6a62', 'photo-1584917865442-de89df76afd3', 'photo-1553062407-98eeb64c6a62'], 'Travel Bag/Luggage': ['photo-1584917865442-de89df76afd3', 'photo-1553062407-98eeb64c6a62', 'photo-1584917865442-de89df76afd3', 'photo-1553062407-98eeb64c6a62'], 'School Bag': ['photo-1584917865442-de89df76afd3', 'photo-1553062407-98eeb64c6a62', 'photo-1584917865442-de89df76afd3', 'photo-1553062407-98eeb64c6a62'], 'Sling Bag/Clutch': ['photo-1584917865442-de89df76afd3', 'photo-1590874103328-eac38a683ce7', 'photo-1584917865442-de89df76afd3', 'photo-1590874103328-eac38a683ce7'], 'Wallet': ['photo-1584917865442-de89df76afd3', 'photo-1590874103328-eac38a683ce7', 'photo-1584917865442-de89df76afd3', 'photo-1590874103328-eac38a683ce7'], 'Footwear': ['photo-1542291026-7eec264c27ff', 'photo-1549298916-b41d501d3772', 'photo-1542291026-7eec264c27ff', 'photo-1549298916-b41d501d3772'], 'Accessories': ['photo-1523170335258-f5ed11844a49', 'photo-1553062407-98eeb64c6a62', 'photo-1523170335258-f5ed11844a49', 'photo-1553062407-98eeb64c6a62'], 'Toys & Stationery': ['photo-1596461404969-9ae70f2830c1', 'photo-1518831959646-742c3a14ebf7', 'photo-1596461404969-9ae70f2830c1', 'photo-1518831959646-742c3a14ebf7'], 'Beauty & Personal Care': ['photo-1556228578-0d85b1a4d571', 'photo-1596462502278-27bfdc403348', 'photo-1556228578-0d85b1a4d571', 'photo-1596462502278-27bfdc403348']};
+
+function generate20ProductsForCategory(catName){
+  let clean = catName.replace('<','').trim();
+  let key = clean;
+  // Find best matching key in map
+  let images = clothesImageMap[key] || clothesImageMap[Object.keys(clothesImageMap).find(k=> clean.toLowerCase().includes(k.toLowerCase().split('/')[0]) || k.toLowerCase().includes(clean.toLowerCase().split(' ')[0]))] || ["photo-1602810318383-e386cc2a3ccf","photo-1610030469983-98e550d6193c","photo-1584305574647-0cc949a2bb9f","photo-1584917865442-de89df76afd3"];
+  
+  let products = [];
+  let adjectives = ["Premium","Stylish","Comfortable","Designer","Trendy","Classic","Modern","Elegant","Casual","Formal","Party Wear","Daily Wear","Office Wear","Summer","Winter","Cotton","Silk","Linen","Denim","Combo Pack"];
+  
+  for(let i=1;i<=20;i++){
+    let adj = adjectives[i%adjectives.length];
+    let imgId = images[i%images.length];
+    let price = 199 + (i*47) % 800;
+    let mrp = price + 200 + (i*53) % 600;
+    let off = Math.round((1-price/mrp)*100);
+    products.push({
+      title: `${clean} - ${adj} ${i} - ${key} Collection`,
+      price: price,
+      mrp: mrp,
+      off: off + "% off",
+      rating: 50 + i*37,
+      img: `https://images.unsplash.com/${imgId}?w=400&h=400&fit=crop&auto=format&q=80&random=${i}`,
+      cat: clean,
+      type: "product"
+    });
+  }
+  return products;
+}
+
+// Override filterCat for product to generate 20 photos
+const originalFilterCat = filterCat;
+filterCat = function(cat,type){
+  if(type==='product'){
+    document.querySelectorAll('.sidebar li').forEach(li=>{li.classList.remove('active'); li.classList.remove('sub-active')});
+    if(event && event.target) event.target.classList.add(cat.startsWith('<')?'sub-active':'active');
+    let products = generate20ProductsForCategory(cat);
+    document.getElementById('productTitle').textContent = "Today's Deals • " + cat.replace('<','').trim() + " • 20 Products • Maduravoyal, Chennai 602105";
+    renderProducts(products,'productGrid',null,'productCount');
+  } else {
+    originalFilterCat(cat,type);
+  }
+}
+
+
+const foodImageMap = 
+{
+    "Grains & Pulses": ["photo-1586201375761-83865001e31c", "photo-1536304993881-ff6e9eefa2a6", "photo-1474979266404-7eaacbcd87c5", "photo-1586201375761-83865001e31c"],
+    "Oils & Jaggery": ["photo-1474979266404-7eaacbcd87c5", "photo-1587049352846-4a222e784d38", "photo-1586201375761-83865001e31c", "photo-1474979266404-7eaacbcd87c5"],
+    "Raw Honey": ["photo-1587049352846-4a222e784d38", "photo-1474979266404-7eaacbcd87c5", "photo-1587049352846-4a222e784d38", "photo-1586201375761-83865001e31c"],
+    "Organic Rice/Millets": ["photo-1586201375761-83865001e31c", "photo-1536304993881-ff6e9eefa2a6", "photo-1586201375761-83865001e31c", "photo-1474979266404-7eaacbcd87c5"],
+    "Organic Oil": ["photo-1474979266404-7eaacbcd87c5", "photo-1586201375761-83865001e31c", "photo-1474979266404-7eaacbcd87c5", "photo-1587049352846-4a222e784d38"],
+    "Organic Jaggery": ["photo-1474979266404-7eaacbcd87c5", "photo-1587049352846-4a222e784d38", "photo-1474979266404-7eaacbcd87c5", "photo-1586201375761-83865001e31c"],
+    "Organic Dal": ["photo-1586201375761-83865001e31c", "photo-1474979266404-7eaacbcd87c5", "photo-1586201375761-83865001e31c", "photo-1586201375761-83865001e31c"],
+    "Organic Honey": ["photo-1587049352846-4a222e784d38", "photo-1474979266404-7eaacbcd87c5", "photo-1587049352846-4a222e784d38", "photo-1586201375761-83865001e31c"],
+    "Regular Rice": ["photo-1586201375761-83865001e31c", "photo-1536304993881-ff6e9eefa2a6", "photo-1586201375761-83865001e31c", "photo-1586201375761-83865001e31c"],
+    "Regular Oil/Masala": ["photo-1474979266404-7eaacbcd87c5", "photo-1586201375761-83865001e31c", "photo-1474979266404-7eaacbcd87c5", "photo-1587049352846-4a222e784d38"],
+    "Biscuits": ["photo-1558961363-fa8fdf82db35", "photo-1499636136210-6f4ee915583e", "photo-1558961363-fa8fdf82db35", "photo-1499636136210-6f4ee915583e"],
+    "Chocolates": ["photo-1558961363-fa8fdf82db35", "photo-1499636136210-6f4ee915583e", "photo-1558961363-fa8fdf82db35", "photo-1499636136210-6f4ee915583e"],
+    "Chips/Kurkure": ["photo-1566478989037-eec170784d0b", "photo-1558961363-fa8fdf82db35", "photo-1566478989037-eec170784d0b", "photo-1558961363-fa8fdf82db35"],
+    "Fruit Jelly/Lollipop": ["photo-1558961363-fa8fdf82db35", "photo-1499636136210-6f4ee915583e", "photo-1558961363-fa8fdf82db35", "photo-1499636136210-6f4ee915583e"],
+    "Cookies": ["photo-1499636136210-6f4ee915583e", "photo-1558961363-fa8fdf82db35", "photo-1499636136210-6f4ee915583e", "photo-1558961363-fa8fdf82db35"],
+    "Namkeen/Mixture": ["photo-1566478989037-eec170784d0b", "photo-1558961363-fa8fdf82db35", "photo-1566478989037-eec170784d0b", "photo-1499636136210-6f4ee915583e"],
+    "Small Juice/Milkshake": ["photo-1621506289937-a8e4df240d0b", "photo-1558961363-fa8fdf82db35", "photo-1621506289937-a8e4df240d0b", "photo-1499636136210-6f4ee915583e"],
+    "Energy Bar": ["photo-1598119026944-84899f3d2d5b", "photo-1558961363-fa8fdf82db35", "photo-1598119026944-84899f3d2d5b", "photo-1499636136210-6f4ee915583e"],
+    "Rusk": ["photo-1499636136210-6f4ee915583e", "photo-1558961363-fa8fdf82db35", "photo-1499636136210-6f4ee915583e", "photo-1558961363-fa8fdf82db35"],
+    "Mixture/Namkeen": ["photo-1566478989037-eec170784d0b", "photo-1558961363-fa8fdf82db35", "photo-1566478989037-eec170784d0b", "photo-1499636136210-6f4ee915583e"],
+    "Oats": ["photo-1517673400267-0251440c45dc", "photo-1586201375761-83865001e31c", "photo-1517673400267-0251440c45dc", "photo-1586201375761-83865001e31c"],
+    "Millets/Quinoa": ["photo-1586201375761-83865001e31c", "photo-1517673400267-0251440c45dc", "photo-1586201375761-83865001e31c", "photo-1517673400267-0251440c45dc"],
+    "Sugar Free Biscuits": ["photo-1499636136210-6f4ee915583e", "photo-1558961363-fa8fdf82db35", "photo-1517673400267-0251440c45dc", "photo-1499636136210-6f4ee915583e"],
+    "Protein Bar": ["photo-1598119026944-84899f3d2d5b", "photo-1517673400267-0251440c45dc", "photo-1598119026944-84899f3d2d5b", "photo-1517673400267-0251440c45dc"],
+    "Weight Gainer": ["photo-1598119026944-84899f3d2d5b", "photo-1517673400267-0251440c45dc", "photo-1598119026944-84899f3d2d5b", "photo-1598119026944-84899f3d2d5b"],
+    "Peanut Butter": ["photo-1598119026944-84899f3d2d5b", "photo-1598119026944-84899f3d2d5b", "photo-1517673400267-0251440c45dc", "photo-1598119026944-84899f3d2d5b"],
+    "Protein Powder/Mass Gainer": ["photo-1598119026944-84899f3d2d5b", "photo-1598119026944-84899f3d2d5b", "photo-1517673400267-0251440c45dc", "photo-1598119026944-84899f3d2d5b"],
+    "Dates/Dry Fruits/Nuts": ["photo-1598119026944-84899f3d2d5b", "photo-1586201375761-83865001e31c", "photo-1598119026944-84899f3d2d5b", "photo-1587049352846-4a222e784d38"],
+    "Green Tea": ["photo-1564890369478-c89ca6d9cde9", "photo-1564890369478-c89ca6d9cde9", "photo-1564890369478-c89ca6d9cde9", "photo-1564890369478-c89ca6d9cde9"],
+    "Apple Cider Vinegar": ["photo-1564890369478-c89ca6d9cde9", "photo-1584308666744-24d5c474f2ae", "photo-1564890369478-c89ca6d9cde9", "photo-1584308666744-24d5c474f2ae"],
+    "Garcinia Capsule/Fat Burner": ["photo-1584308666744-24d5c474f2ae", "photo-1564890369478-c89ca6d9cde9", "photo-1584308666744-24d5c474f2ae", "photo-1564890369478-c89ca6d9cde9"],
+    "Detox Juice/Herbal Tea": ["photo-1564890369478-c89ca6d9cde9", "photo-1621506289937-a8e4df240d0b", "photo-1564890369478-c89ca6d9cde9", "photo-1621506289937-a8e4df240d0b"],
+    "Low Fat Cookies/Oats/Millets": ["photo-1499636136210-6f4ee915583e", "photo-1517673400267-0251440c45dc", "photo-1586201375761-83865001e31c", "photo-1499636136210-6f4ee915583e"]
+}
+;
+const serviceImageMap = 
+{
+    "Tax Filing Services": ["photo-1554224155-6726b3ff858f", "photo-1554224155-8d04cb21cd65", "photo-1450101499163-c8848c66ca85", "photo-1554224155-6726b3ff858f"],
+    "Licenses": ["photo-1589829085413-56de8ae18c73", "photo-1450101499163-c8848c66ca85", "photo-1589829085413-56de8ae18c73", "photo-1554224155-6726b3ff858f"],
+    "Auditing": ["photo-1553877522-43269d4ea984", "photo-1554224154-22dec7ec8818", "photo-1553877522-43269d4ea984", "photo-1554224155-6726b3ff858f"],
+    "GST": ["photo-1554224155-6726b3ff858f", "photo-1554224155-8d04cb21cd65", "photo-1554224155-6726b3ff858f", "photo-1450101499163-c8848c66ca85"],
+    "IT": ["photo-1553877522-43269d4ea984", "photo-1554224154-22dec7ec8818", "photo-1553877522-43269d4ea984", "photo-1554224155-6726b3ff858f"],
+    "MSME": ["photo-1589829085413-56de8ae18c73", "photo-1556761175-b413da4baf72", "photo-1589829085413-56de8ae18c73", "photo-1554224155-6726b3ff858f"],
+    "PAN": ["photo-1450101499163-c8848c66ca85", "photo-1554224155-6726b3ff858f", "photo-1450101499163-c8848c66ca85", "photo-1589829085413-56de8ae18c73"],
+    "Accounting": ["photo-1554224154-22dec7ec8818", "photo-1554224155-6726b3ff858f", "photo-1554224154-22dec7ec8818", "photo-1553877522-43269d4ea984"],
+    "TDS Filing": ["photo-1554224155-8d04cb21cd65", "photo-1554224155-6726b3ff858f", "photo-1554224155-8d04cb21cd65", "photo-1450101499163-c8848c66ca85"],
+    "Domestic": ["photo-1586528116311-ad8dd3c8310d", "photo-1608198093002-ad4e005484ec", "photo-1586528116311-ad8dd3c8310d", "photo-1586528116493-a029325540fa"],
+    "International": ["photo-1586528116311-ad8dd3c8310d", "photo-1586528116493-a029325540fa", "photo-1586528116311-ad8dd3c8310d", "photo-1608198093002-ad4e005484ec"],
+    "Express": ["photo-1580674285054-bed31e145f59", "photo-1586528116311-ad8dd3c8310d", "photo-1580674285054-bed31e145f59", "photo-1608198093002-ad4e005484ec"],
+    "Same Day": ["photo-1608198093002-ad4e005484ec", "photo-1586528116311-ad8dd3c8310d", "photo-1608198093002-ad4e005484ec", "photo-1580674285054-bed31e145f59"],
+    "E-commerce Shipping": ["photo-1586528116493-a029325540fa", "photo-1586528116311-ad8dd3c8310d", "photo-1586528116493-a029325540fa", "photo-1608198093002-ad4e005484ec"],
+    "Startup Registration": ["photo-1507679799987-c73779587ccf", "photo-1556761175-b413da4baf72", "photo-1507679799987-c73779587ccf", "photo-1454165804606-c3d57bc86b40"],
+    "Company Incorporation": ["photo-1556761175-b413da4baf72", "photo-1507679799987-c73779587ccf", "photo-1556761175-b413da4baf72", "photo-1454165804606-c3d57bc86b40"],
+    "Trademark/Patent": ["photo-1589829085413-56de8ae18c73", "photo-1450101499163-c8848c66ca85", "photo-1589829085413-56de8ae18c73", "photo-1554224155-6726b3ff858f"],
+    "FSSAI": ["photo-1589829085413-56de8ae18c73", "photo-1556761175-b413da4baf72", "photo-1589829085413-56de8ae18c73", "photo-1454165804606-c3d57bc86b40"],
+    "ISO": ["photo-1454165804606-c3d57bc86b40", "photo-1556761175-b413da4baf72", "photo-1454165804606-c3d57bc86b40", "photo-1507679799987-c73779587ccf"],
+    "Business Loan": ["photo-1554224155-6726b3ff858f", "photo-1556761175-b413da4baf72", "photo-1554224155-6726b3ff858f", "photo-1507679799987-c73779587ccf"],
+    "GST/MSME Registration": ["photo-1589829085413-56de8ae18c73", "photo-1554224155-6726b3ff858f", "photo-1589829085413-56de8ae18c73", "photo-1556761175-b413da4baf72"],
+    "Website Development": ["photo-1460925895917-afdab827c52f", "photo-1512941937669-90a1b58e7e9c", "photo-1460925895917-afdab827c52f", "photo-1460925895917-afdab827c52f"],
+    "Logo Design": ["photo-1626785774573-6dd65b279390", "photo-1460925895917-afdab827c52f", "photo-1626785774573-6dd65b279390", "photo-1460925895917-afdab827c52f"]
+}
+;
+
+function generate20FoodProducts(catName){
+  let clean = catName.replace('<','').trim();
+  let images = foodImageMap[clean];
+  if(!images){
+    let foundKey = Object.keys(foodImageMap).find(k=> clean.toLowerCase().includes(k.toLowerCase().split('/')[0].trim().toLowerCase()) || k.toLowerCase().includes(clean.toLowerCase()));
+    images = foodImageMap[foundKey] || ["photo-1586201375761-83865001e31c","photo-1474979266404-7eaacbcd87c5","photo-1558961363-fa8fdf82db35","photo-1499636136210-6f4ee915583e"];
+  }
+  let products = [];
+  let adjectives = ["Organic Premium","Natural","Fresh","Healthy","Tasty","Pure","Traditional","Homemade","Premium Quality","Farm Fresh","100% Natural","Best Quality","Super Saver","Family Pack","Combo Pack","Export Quality","Traditional","Daily Use","Special","Deluxe"];
+  for(let i=1;i<=20;i++){
+    let adj = adjectives[i % adjectives.length];
+    let imgId = images[i % images.length];
+    let price = 49 + (i*23) % 400;
+    let mrp = price + 50 + (i*17) % 200;
+    let off = Math.round((1-price/mrp)*100);
+    products.push({
+      title: `${clean} - ${adj} ${i} - ${clean} Special`,
+      price: price,
+      mrp: mrp,
+      off: off + "% off",
+      rating: 100 + i*89,
+      img: `https://images.unsplash.com/${imgId}?w=400&h=400&fit=crop&auto=format&q=80&random=${i+100}`,
+      cat: clean,
+      type: "food"
+    });
+  }
+  return products;
+}
+
+function generate20ServiceProducts(catName){
+  let clean = catName.replace('<','').trim();
+  let images = serviceImageMap[clean];
+  if(!images){
+    let foundKey = Object.keys(serviceImageMap).find(k=> clean.toLowerCase().includes(k.toLowerCase()) || k.toLowerCase().includes(clean.toLowerCase().split(' ')[0]));
+    images = serviceImageMap[foundKey] || ["photo-1554224155-6726b3ff858f","photo-1586528116311-ad8dd3c8310d","photo-1460925895917-afdab827c52f","photo-1507679799987-c73779587ccf"];
+  }
+  let products = [];
+  let adjectives = ["Professional","Expert","Quick Service","Fast Track","Premium","Certified","Trusted","Affordable","24 Hours","Same Day","Express","Complete Package","Starter Pack","Business Pack","Enterprise","Individual","Company","Government Approved","Licensed","Guaranteed"];
+  for(let i=1;i<=20;i++){
+    let adj = adjectives[i % adjectives.length];
+    let imgId = images[i % images.length];
+    let price = 199 + (i*123) % 2000;
+    let mrp = price + 300 + (i*89) % 1000;
+    let off = Math.round((1-price/mrp)*100);
+    products.push({
+      title: `${clean} - ${adj} ${i} - ${clean} Service`,
+      price: price,
+      mrp: mrp,
+      off: off + "% off",
+      rating: 200 + i*45,
+      img: `https://images.unsplash.com/${imgId}?w=400&h=400&fit=crop&auto=format&q=80&random=${i+200}`,
+      cat: clean,
+      type: "service"
+    });
+  }
+  return products;
+}
+
+const originalFilterCat2 = filterCat;
+filterCat = function(cat,type){
+  if(type==='product'){
+    document.querySelectorAll('.sidebar li').forEach(li=>{li.classList.remove('active'); li.classList.remove('sub-active')});
+    if(event && event.target) event.target.classList.add(cat.startsWith('<')?'sub-active':'active');
+    let products = generate20ProductsForCategory(cat);
+    document.getElementById('productTitle').textContent = "Today's Deals • " + cat.replace('<','').trim() + " • 20 Products • Maduravoyal, Chennai 602105";
+    renderProducts(products,'productGrid',null,'productCount');
+  } else if(type==='food'){
+     document.querySelectorAll('.sidebar li').forEach(li=>{li.classList.remove('active'); li.classList.remove('sub-active')});
+    if(event && event.target) event.target.classList.add(cat.startsWith('<')?'sub-active':'active');
+    let products = generate20FoodProducts(cat);
+    document.getElementById('foodTitle').textContent = "Today's Deals • " + cat.replace('<','').trim() + " • 20 Products • Maduravoyal, Chennai 602105";
+    renderProducts(products,'foodGrid',null,'foodCount');
+  } else if(type==='service'){
+    document.querySelectorAll('.sidebar li').forEach(li=>{li.classList.remove('active'); li.classList.remove('sub-active')});
+    if(event && event.target) event.target.classList.add(cat.startsWith('<')?'sub-active':'active');
+    let products = generate20ServiceProducts(cat);
+    document.getElementById('serviceTitle').textContent = "Today's Deals • " + cat.replace('<','').trim() + " • 20 Products • Maduravoyal, Chennai 602105";
+    renderProducts(products,'serviceGrid',null,'serviceCount');
+  } else {
+    originalFilterCat2(cat,type);
+  }
+}
+
+let currentPage='product';
+
+
+let sidebarHistory = [];
+let lastSidebarCats = null;
+let lastSidebarType = null;
+function toggleMain(main){ let ul=document.getElementById('ul-'+main); if(ul) ul.style.display = ul.style.display==='none'?'block':'block'; }
+function goBackSidebar(){
+  if(sidebarHistory.length>0) sidebarHistory.pop();
+  if(lastSidebarCats){
+    renderSidebar(lastSidebarCats, allProducts.filter(p=> lastSidebarType==='food'?p.type==='food': lastSidebarType==='service'?p.type==='service': p.type==='product'), lastSidebarType);
+    if(lastSidebarType==='product'){ renderProducts(allProducts.filter(p=>p.type==='product'),'productGrid',null,'productCount'); document.getElementById('productTitle').textContent="Today's Deals • Clothes Product • Maduravoyal, Chennai 602105"; }
+    else if(lastSidebarType==='food'){ renderProducts(allProducts.filter(p=>p.type==='food'),'foodGrid',null,'foodCount'); document.getElementById('foodTitle').textContent="Today's Deals • Food Product • Maduravoyal, Chennai 602105"; }
+    else if(lastSidebarType==='service'){ renderProducts(allProducts.filter(p=>p.type==='service'),'serviceGrid',null,'serviceCount'); document.getElementById('serviceTitle').textContent="Today's Deals • Service Product • Maduravoyal, Chennai 602105"; }
+  }
+}
+function renderSidebar(cats, productsToShow, type){
+  lastSidebarCats = cats;
+  lastSidebarType = type;
+  const sb=document.getElementById('sidebar');
+  let html='';
+  // Bold top heading as requested: Clothes Product / Food Product / Service Product
+  let topTitle = type==='product' ? 'Clothes Product' : type==='food' ? 'Food Product' : type==='service' ? 'Service Product' : 'Clothes Product';
+  html+=`<div class="section-bold-title">${topTitle}</div>`;
+  
+  for(let main in cats){
+    html+=`<h3><span class="arrow-icon" onclick="event.stopPropagation(); goBackSidebar()" title="Back">‹</span> <span onclick="filterCatWithBack('${main}','${type}'); toggleMain('${main}')" style="flex:1;">${main}</span></h3><ul id="ul-${main}">`;
+    cats[main].forEach(sub=>{
+      let m = sub.trim().match(/^(<+)\s*/);
+      let clean = sub.replace(/^<+\s*/, '').trim();
+      let hasArrow = m && m[1].length>0;
+      let textWeight = "500";
+      if(["grains & pulses","oils & jaggery","raw honey","tax filing services","licenses","auditing"].includes(clean.toLowerCase())){ textWeight="650"; }
+      else if(clean.toLowerCase() === "shirt"){ textWeight="800"; }
+      else if(["classic shirts","printed shirts","party wear"].includes(clean.toLowerCase())){ textWeight="600"; }
+      if(hasArrow){
+        // Light gap as requested - weight 450, big size, minimal gap
+        html+=`<li class="sub-arrow-item" style="display:flex;align-items:center;gap:2px;"><span style="font-weight:450;font-size:22px;color:#000;letter-spacing:0px;display:inline-block;line-height:1;" onclick="event.stopPropagation(); goBackSidebar()"><span style="font-weight:450;">‹‹</span></span> <span style="font-weight:${textWeight};flex:1;cursor:pointer;margin-left:2px;" onclick="filterCatWithBack('${sub}','${type}')">${clean}</span></li>`;
+      } else {
+        html+=`<li onclick="filterCatWithBack('${sub}','${type}')" style="font-weight:${textWeight};">${clean}</li>`;
+      }
+    });
+    html+='</ul>';
+  }
+  sb.innerHTML=html;
+  if(type==='product') renderProducts(productsToShow,'productGrid','productTitle','productCount');
+  else if(type==='food') renderProducts(productsToShow,'foodGrid','foodTitle','foodCount');
+  else if(type==='service') renderProducts(productsToShow,'serviceGrid','serviceTitle','serviceCount');
+  else renderProducts(allProducts,'homeGrid',null,null);
+}
+function filterCatWithBack(cat,type){
+  sidebarHistory.push({cat,type});
+  filterCat(cat,type);
+}
+
+function showPage(page){
+  console.log('Showing page:', page);
+  currentPage=page;
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav div').forEach(n=>n.classList.remove('active'));
+  let target=document.getElementById('page-'+page);
+  if(target) target.classList.add('active');
+  else {document.getElementById('page-home').classList.add('active'); page='home';}
+  let nav=document.getElementById('nav-'+page);
+  if(nav) nav.classList.add('active');
+  if(page==='product') renderSidebar(productCategories, allProducts.filter(p=>p.type==='product'), 'product');
+  else if(page==='food') renderSidebar(foodCategories, allProducts.filter(p=>p.type==='food'), 'food');
+  else if(page==='service') renderSidebar(serviceCategories, allProducts.filter(p=>p.type==='service'), 'service');
+  else if(page==='buyagain') renderBuyAgain();
+  else if(page==='deals') renderDeals();
+  else if(page==='collection') renderCollection();
+  else if(page==='history') renderHistory();
+  else renderSidebar(productCategories, allProducts, 'home');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+
+
+
+
+function renderCollection(){
+  const sb=document.getElementById('sidebar');
+  let html='';
+  for(let main in collectionCategories){
+    html+=`<h3 onclick="toggleMain('${main}')"><span class="arrow-icon">‹</span> ${main}</h3><ul id="ul-${main}">`;
+    collectionCategories[main].forEach(sub=>{
+      html+=`<li onclick="filterCollection('${sub}')">${sub}</li>`;
+    });
+    html+='</ul>';
+  }
+  sb.innerHTML=html;
+  renderProducts(collectionProducts,'collectionGrid','collectionTitle','collectionCount');
+  document.getElementById('collectionTitle').textContent="❤️ Collection • My Wishlist • Maduravoyal, Chennai 602105";
+}
+function filterCollection(cat){
+  document.querySelectorAll('.sidebar li').forEach(li=>{li.classList.remove('active')});
+  if(event && event.target) event.target.classList.add('active');
+  let clean=cat.toLowerCase();
+  let filtered=collectionProducts.filter(p=> (p.title+' '+p.cat).toLowerCase().includes(clean));
+  if(filtered.length===0) filtered=collectionProducts;
+  document.getElementById('collectionTitle').textContent="❤️ Collection • "+cat+" • Maduravoyal, Chennai 602105";
+  renderProducts(filtered,'collectionGrid',null,'collectionCount');
+}
+
+function renderHistory(){
+  const sb=document.getElementById('sidebar');
+  let html='';
+  for(let main in historyCategories){
+    html+=`<h3 onclick="toggleMain('${main}')"><span class="arrow-icon">‹</span> ${main}</h3><ul id="ul-${main}">`;
+    historyCategories[main].forEach(sub=>{
+      html+=`<li onclick="filterHistory('${sub}')">${sub}</li>`;
+    });
+    html+='</ul>';
+  }
+  sb.innerHTML=html;
+  renderProducts(historyProducts,'historyGrid','historyTitle','historyCount');
+  document.getElementById('historyTitle').textContent="🕒 Your History • Recently Viewed • Maduravoyal, Chennai 602105";
+}
+function filterHistory(cat){
+  document.querySelectorAll('.sidebar li').forEach(li=>{li.classList.remove('active')});
+  if(event && event.target) event.target.classList.add('active');
+  let clean=cat.toLowerCase();
+  let filtered=historyProducts.filter(p=> (p.title+' '+p.cat).toLowerCase().includes(clean));
+  if(filtered.length===0 && cat.includes('Clear')){
+    if(confirm('Clear all browsing history?')){historyProducts.length=0; alert('History cleared!');}
+    filtered=historyProducts;
+  }
+  if(filtered.length===0) filtered=historyProducts;
+  document.getElementById('historyTitle').textContent="🕒 Your History • "+cat+" • Maduravoyal, Chennai 602105";
+  renderProducts(filtered,'historyGrid',null,'historyCount');
+}
+
+function renderDeals(){
+
+  const sb=document.getElementById('sidebar');
+  let html='';
+  for(let main in dealsCategories){
+    html+=`<h3 onclick="toggleMain('${main}')"><span class="arrow-icon">‹</span> ${main}</h3><ul id="ul-${main}">`;
+    dealsCategories[main].forEach(sub=>{
+      html+=`<li onclick="filterDeals('${sub}')">${sub}</li>`;
+    });
+    html+='</ul>';
+  }
+  sb.innerHTML=html;
+  renderProducts(dealsProducts,'dealsGrid','dealsTitle','dealsCount');
+  document.getElementById('dealsTitle').textContent="🔥 Today's Deals • Lightning Deals • Maduravoyal, Chennai 602105";
+}
+
+function filterDeals(cat){
+  document.querySelectorAll('.sidebar li').forEach(li=>{li.classList.remove('active')});
+  if(event && event.target) event.target.classList.add('active');
+  let clean=cat.toLowerCase();
+  let filtered=dealsProducts.filter(p=> (p.title+' '+p.cat).toLowerCase().includes(clean));
+  if(filtered.length===0) filtered=dealsProducts.filter(p=> clean.split(' ')[0] && (p.title+' '+p.cat).toLowerCase().includes(clean.split(' ')[0]));
+  if(filtered.length===0) filtered=dealsProducts;
+  document.getElementById('dealsTitle').textContent="🔥 Today's Deals • "+cat+" • Maduravoyal, Chennai 602105";
+  renderProducts(filtered,'dealsGrid',null,'dealsCount');
+}
+
+
+function renderBuyAgain(){
+  const sb=document.getElementById('sidebar');
+  let html='';
+  for(let main in buyAgainCategories){
+    html+=`<h3 onclick="toggleMain('${main}')"><span class="arrow-icon">‹</span> ${main}</h3><ul id="ul-${main}">`;
+    buyAgainCategories[main].forEach(sub=>{
+      html+=`<li onclick="filterBuyAgain('${sub}')">${sub}</li>`;
+    });
+    html+='</ul>';
+  }
+  sb.innerHTML=html;
+  renderProducts(buyAgainProducts,'buyagainGrid','buyagainTitle','buyagainCount');
+}
+
+function filterBuyAgain(cat){
+  document.querySelectorAll('.sidebar li').forEach(li=>{li.classList.remove('active')});
+  if(event && event.target) event.target.classList.add('active');
+  let clean=cat.toLowerCase();
+  let filtered=buyAgainProducts.filter(p=> (p.title+' '+p.cat).toLowerCase().includes(clean));
+  if(filtered.length===0) filtered=buyAgainProducts;
+  document.getElementById('buyagainTitle').textContent="Buy Again • "+cat+" • Maduravoyal, Chennai 602105";
+  renderProducts(filtered,'buyagainGrid',null,'buyagainCount');
+}
+
+
+
+function filterCat(cat,type){
+  document.querySelectorAll('.sidebar li').forEach(li=>{li.classList.remove('active'); li.classList.remove('sub-active')});
+  if(event && event.target) event.target.classList.add(cat.startsWith('<')?'sub-active':'active');
+  let clean=cat.replace('<','').trim().toLowerCase();
+  let filtered=allProducts.filter(p=> (p.title+' '+p.cat).toLowerCase().includes(clean));
+  if(filtered.length===0) filtered=allProducts.filter(p=> clean.split(' ')[0] && (p.title+' '+p.cat).toLowerCase().includes(clean.split(' ')[0]));
+  if(filtered.length===0) filtered= type==='food'?allProducts.filter(p=>p.type==='food'): type==='service'?allProducts.filter(p=>p.type==='service'): allProducts.filter(p=>p.type==='product');
+  if(type==='product'){ document.getElementById('productTitle').textContent="Today's Deals • "+cat.replace('<','').trim()+" • Maduravoyal, Chennai 602105"; renderProducts(filtered,'productGrid',null,'productCount'); }
+  else if(type==='food'){ document.getElementById('foodTitle').textContent="Today's Deals • "+cat.replace('<','').trim()+" • Maduravoyal, Chennai 602105"; renderProducts(filtered,'foodGrid',null,'foodCount'); }
+  else if(type==='service'){ document.getElementById('serviceTitle').textContent="Today's Deals • "+cat.replace('<','').trim()+" • Maduravoyal, Chennai 602105"; renderProducts(filtered,'serviceGrid',null,'serviceCount'); }
+}
+
+function renderProducts(list,gridId,titleId,countId){
+  let grid=document.getElementById(gridId); if(!grid) return;
+  if(countId) document.getElementById(countId).textContent=list.length+' products • All photos in use';
+  grid.innerHTML=list.map(p=>`
+    <div class="card"><div style="position:relative"><span class="prime">prime</span><img src="${p.img}" loading="lazy"></div>
+      <div class="card-body"><h4>${p.title}${p.tag?' - <span style="color:#067D62;font-size:11px">'+p.tag+'</span>':''}</h4><div style="color:#FFA41C;font-size:12px">★★★★☆ ${p.rating}</div><div><span class="price">₹${p.price}</span><span class="mrp">₹${p.mrp}</span><span class="off">(${p.off})</span></div><div style="font-size:11px;color:#067D62;margin-top:5px">🚚 FREE delivery <b>Tomorrow</b> to 602105</div><button class="add-btn" onclick="this.textContent='✓ Added'; this.style.background='#067D62'; this.style.color='white'; setTimeout(()=>{this.textContent='Add to Cart'; this.style.background='#FFD814'; this.style.color='black'},1500)">Add to Cart</button></div></div>
+  `).join('');
+}
+
+function doSearch(){
+  let q=document.getElementById('searchInput').value.toLowerCase().trim();
+  let catSel=document.getElementById('catSelect').value.toLowerCase();
+  let base=allProducts;
+  if(catSel.includes('clothes')||catSel.includes('product')) base=allProducts.filter(p=>p.type==='product');
+  else if(catSel.includes('food')) base=allProducts.filter(p=>p.type==='food');
+  else if(catSel.includes('service')) base=allProducts.filter(p=>p.type==='service');
+  else if(catSel.includes('buy again')) base=buyAgainProducts;
+  else if(catSel.includes('deals')) base=dealsProducts;
+  else if(catSel.includes('collection')) base=collectionProducts;
+  else if(catSel.includes('history')) base=historyProducts;
+  if(!q){ 
+    if(currentPage==='product') renderProducts(allProducts.filter(p=>p.type==='product'),'productGrid',null,'productCount');
+    else if(currentPage==='food') renderProducts(allProducts.filter(p=>p.type==='food'),'foodGrid',null,'foodCount');
+    else if(currentPage==='service') renderProducts(allProducts.filter(p=>p.type==='service'),'serviceGrid',null,'serviceCount');
+    else if(currentPage==='buyagain') renderProducts(buyAgainProducts,'buyagainGrid',null,'buyagainCount');
+    else if(currentPage==='deals') renderProducts(dealsProducts,'dealsGrid',null,'dealsCount');
+    else if(currentPage==='collection') renderProducts(collectionProducts,'collectionGrid',null,'collectionCount');
+    else if(currentPage==='history') renderProducts(historyProducts,'historyGrid',null,'historyCount');
+    else if(currentPage==='deals') renderProducts(dealsProducts,'dealsGrid',null,'dealsCount');
+    else if(currentPage==='collection') renderProducts(collectionProducts,'collectionGrid',null,'collectionCount');
+    else if(currentPage==='history') renderProducts(historyProducts,'historyGrid',null,'historyCount');
+    else if(currentPage==='buyagain') renderProducts(buyAgainProducts,'buyagainGrid',null,'buyagainCount');
+    else renderProducts(allProducts,'homeGrid',null,null); return;
+  }
+  let filtered=base.filter(p=> (p.title+' '+p.cat).toLowerCase().includes(q));
+  if(currentPage==='product'){ document.getElementById('productTitle').textContent="Search results for '"+q+"' • Clothes Product"; renderProducts(filtered,'productGrid',null,'productCount'); }
+  else if(currentPage==='food'){ document.getElementById('foodTitle').textContent="Search results for '"+q+"' • Food"; renderProducts(filtered,'foodGrid',null,'foodCount'); }
+  else if(currentPage==='service'){ document.getElementById('serviceTitle').textContent="Search results for '"+q+"' • Service"; renderProducts(filtered,'serviceGrid',null,'serviceCount'); }
+  else if(currentPage==='buyagain'){ document.getElementById('buyagainTitle').textContent="Search results for '"+q+"' • Buy Again"; renderProducts(filtered,'buyagainGrid',null,'buyagainCount'); }
+  else if(currentPage==='deals'){ document.getElementById('dealsTitle').textContent="Search results for '"+q+"' • Today's Deals"; renderProducts(filtered,'dealsGrid',null,'dealsCount'); }
+  else if(currentPage==='collection'){ document.getElementById('collectionTitle').textContent="Search results for '"+q+"' • Collection"; renderProducts(filtered,'collectionGrid',null,'collectionCount'); }
+  else if(currentPage==='history'){ document.getElementById('historyTitle').textContent="Search results for '"+q+"' • Your History"; renderProducts(filtered,'historyGrid',null,'historyCount'); }
+  else renderProducts(filtered,'homeGrid',null,null);
+}
+
+document.getElementById('searchInput').addEventListener('keydown',e=>{ if(e.key==='Enter') doSearch(); });
+
+function openAllDrawer(){
+  document.getElementById('all-drawer').classList.add('show');
+  document.getElementById('all-drawer-overlay').classList.add('show');
+  document.body.style.overflow='hidden';
+  renderAllDrawer();
+}
+function closeAllDrawer(){
+  document.getElementById('all-drawer').classList.remove('show');
+  document.getElementById('all-drawer-overlay').classList.remove('show');
+  document.body.style.overflow='';
+}
+function renderAllDrawer(){
+  const allCats = {...productCategories, ...foodCategories, ...serviceCategories, "Buy Again": ["Frequently Bought","Last 30 Days","Recommended"],
+    "Collection": ["Wishlist - 12 items","Men Fashion - 8 items","Women Fashion - 15 items","Kids Collection","Home Decor","Food Favorites"],
+    "Your History": ["Today","Yesterday","Last Week","Manage History","Clear All History"]};
+  let html='';
+  for(let main in allCats){
+    html+=`<div class="drawer-section"><h3>${main}</h3><ul>`;
+    allCats[main].forEach(sub=>{
+      html+=`<li onclick="handleDrawerClick('${sub.replace(/'/g,"\'")}')"><span>${sub}</span><span>›</span></li>`;
+    });
+      html+='</ul></div>';
+  }
+  document.getElementById('drawer-content').innerHTML=html;
+}
+function handleDrawerClick(cat){
+  closeAllDrawer();
+  let clean=cat.replace('<','').trim().toLowerCase();
+  let foodKeys=["organic","grains","oils","honey","rice","millets","dal","biscuits","chocolates","chips","jelly","cookies","namkeen","juice","energy","rusk","oats","millets","quinoa","sugar","protein","weight","gainer","peanut","dates","green tea","vinegar","garcinia","detox"];
+  let serviceKeys=["tax","licenses","auditing","gst","it","msme","pan","accounting","tds","courier","domestic","international","express","same day","e-commerce","startup","company","trademark","fssai","iso","business loan","website","logo"];
+  let buyKeys=["frequently","bought","last month","recommended","men shirts","women saree"];
+  let isFood=foodKeys.some(k=>clean.includes(k));
+  let isService=serviceKeys.some(k=>clean.includes(k));
+  let isBuy=buyKeys.some(k=>clean.includes(k));
+  if(isFood){showPage('food'); setTimeout(()=>filterCat(cat,'food'),300);}
+  else if(isService){showPage('service'); setTimeout(()=>filterCat(cat,'service'),300);}
+  else if(isBuy){showPage('buyagain');}
+  else {showPage('product'); setTimeout(()=>filterCat(cat,'product'),300);}
+}
+
+showPage('product');
+setTimeout(()=>{ if(currentLang!=='EN') setLanguage(currentLang); }, 200);
+
+
+const ZARVOX_TRANSLATIONS = {
+  EN: { nav_All: "☰ All", nav_Home:"Home", nav_Deals:"Today's Deals", nav_Product:"Product", nav_Food:"Food", nav_Service:"Service", nav_BuyAgain:"Buy Again", nav_Collection:"Collection", nav_History:"Your History",
+        clothesTitle:"Clothes Product", bannerExtra:"Extra savings on Clothes Product - Men, Women & Kids Fashion. Maduravoyal, Chennai delivery in 24hrs.", offBtn:"Up to 70% OFF", freeDel:"Free Delivery",
+        searchPH:"Search ZARVOX.in", delivering:"Delivering to", hello:"Hello, sign in", accLists:"Account & Lists", returns:"Returns & Orders", cart:"Cart",
+        langTitle:"Change Language", learnMore:"Learn more", shoppingOn:"You are shopping on ZARVOX.in", changeCountry:"Change country/region." },
+  HI: { nav_All: "☰ सभी", nav_Home:"होम", nav_Deals:"आज की डील", nav_Product:"प्रोडक्ट", nav_Food:"खाना", nav_Service:"सेवा", nav_BuyAgain:"फिर से खरीदें", nav_Collection:"कलेक्शन", nav_History:"आपका इतिहास",
+        clothesTitle:"कपड़े उत्पाद", bannerExtra:"कपड़े उत्पाद पर अतिरिक्त बचत - पुरुष, महिला और बच्चों के फैशन। मदुरवोयल, चेन्नई में 24 घंटे में डिलीवरी।", offBtn:"70% तक छूट", freeDel:"मुफ़्त डिलीवरी",
+        searchPH:"ZARVOX.in पर खोजें", delivering:"डिलीवरी", hello:"नमस्ते, साइन इन करें", accLists:"अकाउंट और लिस्ट", returns:"रिटर्न और ऑर्डर", cart:"कार्ट",
+        langTitle:"भाषा बदलें", learnMore:"और जानें", shoppingOn:"आप ZARVOX.in पर शॉपिंग कर रहे हैं", changeCountry:"देश/क्षेत्र बदलें।" },
+  TA: { nav_All: "☰ அனைத்தும்", nav_Home:"முகப்பு", nav_Deals:"இன்றைய சலுகைகள்", nav_Product:"பொருட்கள்", nav_Food:"உணவு", nav_Service:"சேவை", nav_BuyAgain:"மீண்டும் வாங்க", nav_Collection:"சேகரிப்பு", nav_History:"உங்கள் வரலாறு",
+        clothesTitle:"ஆடை பொருட்கள்", bannerExtra:"ஆடை பொருட்களில் கூடுதல் சேமிப்பு - ஆண்கள், பெண்கள் & குழந்தைகள் ஃபேஷன். மதுரவாயல், சென்னை 24 மணி நேரத்தில் டெலிவரி.", offBtn:"70% வரை தள்ளுபடி", freeDel:"இலவச டெலிவரி",
+        searchPH:"ZARVOX.in இல் தேடுங்கள்", delivering:"டெலிவரி செய்யப்படுகிறது", hello:"வணக்கம், உள்நுழைக", accLists:"கணக்கு & பட்டியல்கள்", returns:"திரும்ப & ஆர்டர்கள்", cart:"கார்ட்",
+        langTitle:"மொழியை மாற்று", learnMore:"மேலும் அறிக", shoppingOn:"நீங்கள் ZARVOX.in இல் ஷாப்பிங் செய்கிறீர்கள்", changeCountry:"நாடு/பிராந்தியத்தை மாற்றவும்." },
+  TE: { nav_All: "☰ అన్నీ", nav_Home:"హోమ్", nav_Deals:"నేటి డీల్స్", nav_Product:"ప్రొడక్ట్", nav_Food:"ఆహారం", nav_Service:"సర్వీస్", nav_BuyAgain:"మళ్లీ కొనండి", nav_Collection:"కలెక్షన్", nav_History:"మీ చరిత్ర",
+        clothesTitle:"బట్టల ఉత్పత్తులు", bannerExtra:"బట్టల ఉత్పత్తులపై అదనపు పొదుపు - పురుషులు, మహిళలు & పిల్లల ఫ్యాషన్. మదురవాయల్, చెన్నై 24 గంటల్లో డెలివరీ.", offBtn:"70% వరకు ఆఫ్", freeDel:"ఉచిత డెలివరీ",
+        searchPH:"ZARVOX.in లో వెతకండి", delivering:"డెలివరీ", hello:"హలో, సైన్ ఇన్ చేయండి", accLists:"ఖాతా & జాబితాలు", returns:"రిటర్న్స్ & ఆర్డర్లు", cart:"కార్ట్",
+        langTitle:"భాష మార్చండి", learnMore:"మరింత తెలుసుకోండి", shoppingOn:"మీరు ZARVOX.in లో షాపింగ్ చేస్తున్నారు", changeCountry:"దేశం/ప్రాంతాన్ని మార్చండి." },
+  KN: { nav_All: "☰ ಎಲ್ಲಾ", nav_Home:"ಮುಖಪುಟ", nav_Deals:"ಇಂದಿನ ಡೀಲ್‌ಗಳು", nav_Product:"ಉತ್ಪನ್ನ", nav_Food:"ಆಹಾರ", nav_Service:"ಸೇವೆ", nav_BuyAgain:"ಮತ್ತೆ ಖರೀದಿಸಿ", nav_Collection:"ಸಂಗ್ರಹ", nav_History:"ನಿಮ್ಮ ಇತಿಹಾಸ",
+        clothesTitle:"ಬಟ್ಟೆ ಉತ್ಪನ್ನಗಳು", bannerExtra:"ಬಟ್ಟೆ ಉತ್ಪನ್ನಗಳ ಮೇಲೆ ಹೆಚ್ಚುವರಿ ಉಳಿತಾಯ - ಪುರುಷರು, ಮಹಿಳೆಯರು ಮತ್ತು ಮಕ್ಕಳ ಫ್ಯಾಷನ್. ಮಧುರವಾಯಲ್, ಚೆನ್ನೈ 24 ಗಂಟೆಗಳಲ್ಲಿ ವಿತರಣೆ.", offBtn:"70% ವರೆಗೆ ರಿಯಾಯಿತಿ", freeDel:"ಉಚಿತ ವಿತರಣೆ",
+        searchPH:"ZARVOX.in ನಲ್ಲಿ ಹುಡುಕಿ", delivering:"ವಿತರಣೆ", hello:"ಹಲೋ, ಸೈನ್ ಇನ್ ಮಾಡಿ", accLists:"ಖಾತೆ & ಪಟ್ಟಿಗಳು", returns:"ರಿಟರ್ನ್ಸ್ & ಆರ್ಡರ್‌ಗಳು", cart:"ಕಾರ್ಟ್",
+        langTitle:"ಭಾಷೆ ಬದಲಾಯಿಸಿ", learnMore:"ಇನ್ನಷ್ಟು ತಿಳಿಯಿರಿ", shoppingOn:"ನೀವು ZARVOX.in ನಲ್ಲಿ ಶಾಪಿಂಗ್ ಮಾಡುತ್ತಿದ್ದೀರಿ", changeCountry:"ದೇಶ/ಪ್ರದೇಶ ಬದಲಾಯಿಸಿ." },
+  ML: { nav_All: "☰ എല്ലാം", nav_Home:"ഹോം", nav_Deals:"ഇന്നത്തെ ഡീലുകൾ", nav_Product:"പ്രോഡക്റ്റ്", nav_Food:"ഭക്ഷണം", nav_Service:"സേവനം", nav_BuyAgain:"വീണ്ടും വാങ്ങുക", nav_Collection:"കളക്ഷൻ", nav_History:"നിങ്ങളുടെ ചരിത്രം",
+        clothesTitle:"വസ്ത്ര ഉൽപ്പന്നങ്ങൾ", bannerExtra:"വസ്ത്ര ഉൽപ്പന്നങ്ങളിൽ അധിക ലാഭം - പുരുഷന്മാർ, സ്ത്രീകൾ & കുട്ടികളുടെ ഫാഷൻ. മധുരവോയൽ, ചെന്നൈ 24 മണിക്കൂറിനുള്ളിൽ ഡെലിവറി.", offBtn:"70% വരെ ഓഫ്", freeDel:"സൗജന്യ ഡെലിവറി",
+        searchPH:"ZARVOX.in ൽ തിരയുക", delivering:"ഡെലിവറി", hello:"ഹലോ, സൈൻ ഇൻ ചെയ്യുക", accLists:"അക്കൗണ്ട് & ലിസ്റ്റുകൾ", returns:"റിട്ടേൺസ് & ഓർഡറുകൾ", cart:"കാർട്ട്",
+        langTitle:"ഭാഷ മാറ്റുക", learnMore:"കൂടുതൽ അറിയുക", shoppingOn:"നിങ്ങൾ ZARVOX.in ൽ ഷോപ്പിംഗ് ചെയ്യുന്നു", changeCountry:"രാജ്യം/പ്രദേശം മാറ്റുക." },
+  BN: { nav_All: "☰ সব", nav_Home:"হোম", nav_Deals:"আজকের ডিল", nav_Product:"পণ্য", nav_Food:"খাবার", nav_Service:"পরিষেবা", nav_BuyAgain:"আবার কিনুন", nav_Collection:"কালেকশন", nav_History:"আপনার ইতিহাস",
+        clothesTitle:"পোশাক পণ্য", bannerExtra:"পোশাক পণ্যে অতিরিক্ত সঞ্চয় - পুরুষ, মহিলা ও বাচ্চাদের ফ্যাশন। মাদুরাভয়াল, চেন্নাই 24 ঘন্টায় ডেলিভারি।", offBtn:"70% পর্যন্ত ছাড়", freeDel:"বিনামূল্যে ডেলিভারি",
+        searchPH:"ZARVOX.in এ অনুসন্ধান করুন", delivering:"ডেলিভারি", hello:"হ্যালো, সাইন ইন করুন", accLists:"অ্যাকাউন্ট ও তালিকা", returns:"রিটার্ন ও অর্ডার", cart:"কার্ট",
+        langTitle:"ভাষা পরিবর্তন করুন", learnMore:"আরও জানুন", shoppingOn:"আপনি ZARVOX.in এ কেনাকাটা করছেন", changeCountry:"দেশ/অঞ্চল পরিবর্তন করুন।" },
+  MR: { nav_All: "☰ सर्व", nav_Home:"होम", nav_Deals:"आजच्या ऑफर्स", nav_Product:"उत्पादन", nav_Food:"अन्न", nav_Service:"सेवा", nav_BuyAgain:"पुन्हा खरेदी करा", nav_Collection:"कलेक्शन", nav_History:"तुमचा इतिहास",
+        clothesTitle:"कपडे उत्पादने", bannerExtra:"कपडे उत्पादनांवर अतिरिक्त बचत - पुरुष, महिला आणि लहान मुलांचे फॅशन. मदुरावोयल, चेन्नई 24 तासांत वितरण.", offBtn:"70% पर्यंत सूट", freeDel:"मोफत वितरण",
+        searchPH:"ZARVOX.in वर शोधा", delivering:"वितरण", hello:"नमस्कार, साइन इन करा", accLists:"खाते & याद्या", returns:"रिटर्न्स & ऑर्डर्स", cart:"कार्ट",
+        langTitle:"भाषा बदला", learnMore:"अधिक जाणून घ्या", shoppingOn:"तुम्ही ZARVOX.in वर खरेदी करत आहात", changeCountry:"देश/प्रदेश बदला." }
+};
+
+let currentLang = localStorage.getItem('zarvox_lang') || 'EN';
+
+function setLanguage(code){
+  currentLang = code;
+  localStorage.setItem('zarvox_lang', code);
+  const t = ZARVOX_TRANSLATIONS[code];
+  // Update radio
+  document.querySelectorAll('input[name="lang"]').forEach((r,i)=>{
+    const codes = ['EN','HI','TA','TE','KN','ML','BN','MR'];
+    r.checked = codes[i]===code;
+  });
+  // Update EN button text
+  document.getElementById('langBtn').childNodes[0].textContent = code + ' ▼ ';
+  // Nav
+  const navMap = {
+    'nav-deals': 'nav_Deals', 'nav-product':'nav_Product','nav-food':'nav_Food','nav-service':'nav_Service','nav-buyagain':'nav_BuyAgain','nav-collection':'nav_Collection','nav-history':'nav_History'
+  };
+  // Update nav texts (keep All and Home separate)
+  const allBtn = document.querySelector('.nav div:nth-child(1)'); if(allBtn) allBtn.textContent = t.nav_All;
+  const homeBtn = document.querySelector('.nav div:nth-child(2)'); if(homeBtn) homeBtn.textContent = t.nav_Home;
+  for(let id in navMap){ const el=document.getElementById(id); if(el) el.textContent = t[navMap[id]]; }
+  // Search placeholder
+  const searchInput = document.getElementById('searchInput'); if(searchInput) searchInput.placeholder = t.searchPH;
+  // Banner texts - find by class
+  document.querySelectorAll('.banner-left div').forEach(d=>{
+    if(d.textContent.includes('Extra savings') || d.textContent.includes('अतिरिक्त') || d.textContent.includes('கூடுதல்') || d.textContent.includes('అదనపు') || Object.values(ZARVOX_TRANSLATIONS).some(tr=>d.textContent.includes(tr.bannerExtra.substring(0,10)))) {
+        d.textContent = t.bannerExtra;
+    }
+  });
+  // Clothes Product heading
+  const clothHeading = document.querySelector('#page-product .deals-header h2, .sidebar h3');
+  // Update lang dropdown texts
+  const langTitleEl = document.querySelector('#langDropdown .lang-title'); 
+  if(langTitleEl) langTitleEl.innerHTML = t.langTitle + ' <a href="#">' + t.learnMore + '</a>';
+  const countryLine = document.querySelector('#langDropdown .country-line'); if(countryLine) countryLine.textContent = 'IN ' + t.shoppingOn;
+  const changeCountryLink = document.querySelector('#langDropdown a[href="#"]:last-child'); 
+  // second link
+  document.querySelectorAll('#langDropdown a').forEach(a=>{ if(a.textContent.includes('Change country') || a.textContent.includes('देश') || a.textContent.includes('நாடு')) a.textContent = t.changeCountry; });
+  
+  // Close dropdowns
+  document.getElementById('langDropdown').classList.remove('show');
+  document.getElementById('accountDropdown').classList.remove('show');
+  
+  // Optional: show toast
+  console.log('Language changed to '+code);
+}
+
+
+function openSigninPage(e){
+  if(e) e.stopPropagation();
+  document.getElementById('signinPage').classList.add('show');
+  document.getElementById('langDropdown').classList.remove('show');
+  document.getElementById('accountDropdown').classList.remove('show');
+  document.body.style.overflow='hidden';
+}
+function closeSigninPage(){
+  document.getElementById('signinPage').classList.remove('show');
+  document.body.style.overflow='';
+}
+function handleSigninContinue(){
+  const val = document.getElementById('signinInput').value.trim();
+  if(!val){ alert('Enter mobile number or email'); return; }
+  alert('Continue with: ' + val + ' (ZARVOX demo)');
+}
+
+
+function openLocationPopup(e){
+  if(e) e.stopPropagation();
+  document.getElementById('locationOverlay').classList.add('show');
+  document.getElementById('locationPopup').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeLocationPopup(){
+  document.getElementById('locationOverlay').classList.remove('show');
+  document.getElementById('locationPopup').classList.remove('show');
+  document.body.style.overflow='';
+}
+function applyPincode(){
+  const pin = document.getElementById('pincodeInput').value.trim();
+  const msg = document.getElementById('pincodeMsg');
+  if(!pin || pin.length!==6 || isNaN(pin)){
+    msg.style.display='block'; msg.style.color='#C40000'; msg.textContent='Please enter a valid 6-digit pincode';
+    return;
+  }
+  // Update location text
+  document.getElementById('deliveryLocationText').textContent = 'Pincode ' + pin + ', Chennai';
+  msg.style.display='block'; msg.style.color='#067D62'; msg.textContent='✓ Delivery location updated to ' + pin;
+  setTimeout(closeLocationPopup, 900);
+}
+
+
+function openCartPage(e){
+  if(e) e.stopPropagation();
+  renderCartRecent();
+  document.getElementById('cartPage').classList.add('show');
+  document.getElementById('langDropdown').classList.remove('show');
+  document.getElementById('accountDropdown').classList.remove('show');
+  document.body.style.overflow='hidden';
+}
+function closeCartPage(){
+  document.getElementById('cartPage').classList.remove('show');
+  document.body.style.overflow='';
+}
+function renderCartRecent(){
+  const listEl = document.getElementById('cartRecentList');
+  if(!listEl) return;
+  // Use historyProducts or sample
+  const sample = (typeof historyProducts!=='undefined' && historyProducts.length) ? historyProducts.slice(0,5) : (typeof allProducts!=='undefined' ? allProducts.slice(0,5) : []);
+  const fallback = [
+    {title:"Simple Water Boost Hydrating Gel 50ml",price:283,mrp:405,off:"30% off",rating:624,img:"https://images.unsplash.com/photo-1556228720-195a672e8a03?w=200",cat:"Skincare"},
+    {title:"Simple Barrier Repair Cream 50g",price:287,mrp:360,off:"20% off",rating:219,img:"https://images.unsplash.com/photo-1556228578-8c89d6adf841?w=200",cat:"Skincare"},
+    {title:"Simple Hydrating Light Moisturizer 40ml",price:199,mrp:249,off:"20% off",rating:572,img:"https://images.unsplash.com/photo-1570554886111-eaf6736c5a6e?w=200",cat:"Skincare"},
+    {title:"Simple Hydrating UV Protect Cream",price:324,mrp:499,off:"35% off",rating:43,img:"https://images.unsplash.com/photo-1556228578-0d81b4e8d1ed?w=200",cat:"Skincare"},
+    {title:"Simple Mattifying UV Cream SPF 50",price:324,mrp:499,off:"35% off",rating:126,img:"https://images.unsplash.com/photo-1556228720-195a672e8a03?w=200",cat:"Skincare"}
+  ];
+  const items = sample.length? sample : fallback;
+  const days = ["Sunday, October 4","Friday, October 2","Tuesday, October 6","Friday, October 2","Tuesday, October 6"];
+  listEl.innerHTML = items.map((p,i)=>`
+    <div class="cart-recent-item">
+      <img src="${p.img}" onerror="this.src='https://via.placeholder.com/80'">
+      <div class="cart-recent-info">
+        <div class="cart-recent-title">${p.title}</div>
+        <div class="cart-recent-rating">★★★★☆ ${p.rating}</div>
+        <div class="cart-recent-price"><span style="color:#067D62">${p.off}</span> <b>₹${p.price}</b><span style="font-size:10px">00</span></div>
+        <div class="cart-recent-mrp">M.R.P: ₹${p.mrp}.00</div>
+        <div class="cart-recent-del">Get it by <b>${days[i] || 'Tomorrow'}</b><br><span style="color:#067D62;font-size:10px">FREE Delivery by ZARVOX</span></div>
+        <button class="cart-recent-add" onclick="alert('Added ${p.title.substring(0,20)} to cart')">Add to cart</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleLang(e){
+  e.stopPropagation();
+  document.getElementById('langDropdown').classList.toggle('show');
+  document.getElementById('accountDropdown').classList.remove('show');
+}
+function toggleAccount(e){
+  e.stopPropagation();
+  document.getElementById('accountDropdown').classList.toggle('show');
+  document.getElementById('langDropdown').classList.remove('show');
+}
+document.addEventListener('click', function(){
+  document.getElementById('langDropdown').classList.remove('show');
+  document.getElementById('accountDropdown').classList.remove('show');
+});
+
+</script>
+
+<div id="signinPage">
+  <div class="signin-close" onclick="closeSigninPage()">✕</div>
+  <div class="signin-header">zarvox<span>.in</span></div>
+  <div class="signin-box-center">
+    <h2>Sign in or create account</h2>
+    <label>Enter mobile number or email</label>
+    <input type="text" id="signinInput">
+    <button class="signin-continue" onclick="handleSigninContinue()">Continue</button>
+    <div class="signin-terms">
+      By continuing, you agree to ZARVOX's <a href="#">Conditions of Use</a> and <a href="#">Privacy Notice.</a>
+    </div>
+    <div class="signin-divider"></div>
+    <div class="signin-work">
+      <b>Buying for work?</b><br>
+      <a href="#">Create a free business account</a>
+    </div>
+  </div>
+  <div class="signin-footer">
+    <a href="#">Conditions of Use</a> <a href="#">Privacy Notice</a> <a href="#">Help</a>
+    <div style="margin-top:10px;color:#555">© 1996–2026, ZARVOX.com, Inc. or its affiliates</div>
+  </div>
+</div>
+
+
+<div id="locationOverlay" onclick="closeLocationPopup()"></div>
+<div id="locationPopup">
+  <div class="loc-header">
+    <span>Choose your location</span>
+    <div class="loc-close" onclick="closeLocationPopup()">✕</div>
+  </div>
+  <div class="loc-body">
+    <p>Select a delivery location to see product availability and delivery options</p>
+    <button class="loc-signin-btn" onclick="openSigninPage(); closeLocationPopup();">Sign in to see your addresses</button>
+    <div class="loc-divider">or enter an Indian pincode</div>
+    <div class="loc-pincode-row">
+      <input type="text" id="pincodeInput" placeholder="" maxlength="6">
+      <button class="loc-apply" onclick="applyPincode()">Apply</button>
+    </div>
+    <div id="pincodeMsg" style="font-size:11px;margin-top:8px;color:#067D62;display:none"></div>
+  </div>
+</div>
+
+
+<div id="cartPage">
+  <div class="cart-topbar">
+    <div class="logo">ZARVOX</div>
+    <button class="cart-close-btn" onclick="closeCartPage()">✕ Close Cart</button>
+  </div>
+  <div class="cart-main">
+    <div class="cart-left">
+      <img src="https://m.media-amazon.com/images/G/31/cart/empty/kettle-desaturated._CB424694257_.svg" onerror="this.style.display='none'">
+      <div>
+        <div class="cart-empty-title">Your ZARVOX Cart is empty</div>
+        <a class="cart-empty-link" href="#" onclick="closeCartPage(); showPage('deals'); return false;">Shop today's deals</a>
+        <div class="cart-btns">
+          <button class="cart-btn-yellow" onclick="openSigninPage(); closeCartPage();">Sign in to your account</button>
+          <button class="cart-btn-white" onclick="openSigninPage(); closeCartPage();">Sign up now</button>
+        </div>
+      </div>
+    </div>
+    <div class="cart-right">
+      <h3>Your recently viewed items</h3>
+      <div id="cartRecentList"></div>
+    </div>
+  </div>
+  <div class="cart-note">
+    The price and availability of items at ZARVOX.in are subject to change. The shopping cart is a temporary place to store a list of your items and reflects each item's most recent price.<br>
+    Do you have a gift card or promotional code? We'll ask you to enter your claim code when it's time to pay.
+  </div>
+</div>
+</body>
+</html>
